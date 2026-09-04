@@ -1,0 +1,37 @@
+# RL Executive Search — International Tech & Executive Headhunting
+
+> Executive Search, Tech Headhunting, and Career Advisory led by Ricardo Oliveira. Connecting top global technology specialists, architects, and engineering leaders to high-impact opportunities in the United States, Europe, and Brazil with compensation in USD and EUR.
+
+## Overview
+- **Headhunter & Founder**: Ricardo Oliveira (International Headhunter & Executive Career Mentor)
+- **Specialization**: Executive Search for Senior, Staff, Principal, Lead, and C-Level Tech positions.
+- **Coverage**: United States, European Union (Portugal, UK, Germany, Netherlands), and Brazil.
+- **Live Database**: 547+ active international positions with transparent compensation in USD, EUR, and BRL.
+- **Contact & WhatsApp**: +351 926 527 934
+- **Official Email**: contato@licenciadorh.com.br / Ricardoliveira2974@gmail.com
+- **LinkedIn**: https://www.linkedin.com/in/ricardosoaresoliveira/
+
+## Key Services
+- **Executive Search & Headhunting**: 14-day shortlist for US and European enterprises looking for vetted Senior and Staff tech talent.
+- **Cross-Border Advisory**: Comprehensive B2B international contractor structuring (USD/EUR), compliance, and relocation assistance.
+- **Career Mentorship for Senior Engineers**: Advisory on international positioning, compensation negotiation, and foreign hiring processes.
+
+## Main Job Areas & Technologies
+- **Artificial Intelligence & Data**: LLM Training, Prompt Engineering, RLHF, Machine Learning, Computer Vision, Data Engineering, MLOps (Python, PyTorch, LangChain, OpenAI, Spark).
+- **Software Engineering**: Distributed Systems, High-Scale Backend, Frontend, Full Stack (Go/Golang, Java, Python, TypeScript, React, Node.js, Rust, C#, .NET, Flutter, React Native).
+- **Cloud & DevOps / SRE**: Kubernetes, AWS, Google Cloud, Azure, Terraform, CI/CD, Observability, Datadog.
+- **Leadership & Product**: Head of Engineering, VP of Tech, CTO, Technical Product Managers (TPM), Staff UX / Design Systems.
+
+## Compensation Ranges
+- **United States Remote (USD)**: $90,000 to $205,000 / year (Contractor B2B).
+- **Europe (EUR)**: €50,000 to €150,000 / year (Contractor B2B or Relocation).
+- **Brazil (BRL)**: R$ 15.000 to R$ 35.000 / month (PJ / CLT).
+
+## Verified Client & Placement Ecosystem
+Companies with talent placed or active hunting: BNP Paribas, Capgemini, Deloitte, Accenture, IBM, CGI, TOTVS, Nubank, Mercado Pago, Stripe, AWS, OpenAI Partners, Google Cloud, Salesforce, SAP, Cisco, and Uber Tech.
+
+## Direct Links & Resources
+- [Mural de Vagas / Job Board](https://licenciadorh.com.br/#vagas): 547+ curated international positions.
+- [B2B Corporate Briefing](https://licenciadorh.com.br/#b2b): Request an executive shortlist in 14 days.
+- [WhatsApp Direct Contact](https://wa.me/351926527934): Instant messaging with Ricardo Oliveira.
+- [Full LLM Documentation](https://licenciadorh.com.br/llms-full.txt): Detailed structural and organizational data for AI agents.

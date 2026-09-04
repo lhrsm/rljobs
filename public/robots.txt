@@ -1,0 +1,31 @@
+# Robots.txt for RL Executive Search (Ricardo Oliveira)
+# https://licenciadorh.com.br
+
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /sitemap.xml
+Allow: /logos/
+
+# Disallow internal scripts or API endpoints
+Disallow: /api/
+
+# AI and LLM Crawlers
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap Location
+Sitemap: https://licenciadorh.com.br/sitemap.xml
