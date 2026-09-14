@@ -10,9 +10,7 @@ import {
   CheckCircle, 
   AlertCircle, 
   ChevronRight, 
-  ChevronLeft, 
-  Sparkles,
-  Lock
+  ChevronLeft
 } from 'lucide-react';
 import { 
   MentoringFormData, 
@@ -209,10 +207,9 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess 
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/50 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
-            <Lock className="w-3.5 h-3.5" />
-            <span>Processo Seletivo & Avaliação Confidencial</span>
-          </div>
+          <span className="text-xs font-bold uppercase tracking-widest text-blue-400 block mb-2">
+            Avaliação Confidencial
+          </span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
             Formulário de Pré-Qualificação
           </h2>
@@ -675,9 +672,8 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess 
             {currentStep === 4 && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="border-b border-slate-800 pb-3">
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-blue-400" />
-                    <span>Pretensão Salarial, CV & Momento Comercial</span>
+                  <h3 className="text-lg font-bold text-white">
+                    Pretensão Salarial, CV & Momento Comercial
                   </h3>
                   <p className="text-xs text-slate-400 mt-0.5">
                     Última etapa para cálculo de viabilidade e triagem executiva.

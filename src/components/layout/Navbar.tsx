@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Sparkles, Building2 } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface NavbarProps {
@@ -23,17 +23,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-white shadow-md"
+      className="fixed top-0 left-0 right-0 z-40 bg-slate-900 border-b border-slate-800 text-white shadow-md"
       role="banner"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           
           {/* Logo & Brand */}
           <button
             onClick={() => handleNav('b2b')}
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg p-1 text-left cursor-pointer"
-            aria-label="RL Headhunter - Início"
+            aria-label="Ricardo Oliveira - Início"
           >
             <div className="w-9 h-9 bg-white rounded-xl p-1 flex items-center justify-center shadow-sm">
               <img src="/RL Jobs.png" alt="RL Logo" className="w-7 h-7 object-contain" />
@@ -48,38 +48,35 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </button>
 
-          {/* Desktop Links (Empresas | Profissionais | Vagas | Sobre | Contato) */}
-          <nav className="hidden lg:flex items-center gap-6" aria-label="Navegação Principal">
-            
+          {/* Desktop Links: Empresas | Profissionais | Vagas | Sobre | Contato */}
+          <nav className="hidden lg:flex items-center gap-8" aria-label="Navegação Principal">
             {/* 1. Empresas */}
             <button
               onClick={() => handleNav('b2b')}
-              className={`text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 py-1.5 px-3 rounded-lg cursor-pointer ${
+              className={`text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                 currentView === 'b2b'
-                  ? 'bg-slate-800 text-white border border-slate-700 shadow-inner'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                  ? 'text-white font-bold'
+                  : 'text-slate-300 hover:text-white'
               }`}
             >
-              <Building2 className="w-3.5 h-3.5 text-blue-400" />
-              <span>Empresas</span>
+              Empresas
             </button>
 
-            {/* 2. Profissionais (Highlighted for B2C Mentoring) */}
+            {/* 2. Profissionais */}
             <button
               onClick={() => handleNav('professionals')}
-              className={`text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 py-1.5 px-3 rounded-lg cursor-pointer ${
+              className={`text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                 currentView === 'professionals'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-blue-400 hover:text-blue-300 bg-blue-950/40 border border-blue-500/30 hover:bg-blue-900/40'
+                  ? 'text-white font-bold'
+                  : 'text-slate-300 hover:text-white'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-blue-300" />
-              <span>Profissionais</span>
+              Profissionais
             </button>
 
             {/* 3. Vagas */}
             <button
-              onClick={() => handleNav(currentView, 'vagas')}
+              onClick={() => handleNav('professionals', 'vagas')}
               className="text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
               Vagas
@@ -102,10 +99,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </nav>
 
-          {/* Right Controls: Language & Actions */}
+          {/* Right Controls: Language Switcher */}
           <div className="flex items-center gap-3">
-            
-            {/* Language Switcher */}
             <div className="flex items-center bg-slate-800 border border-slate-700 rounded-lg p-0.5">
               <button
                 onClick={() => setLanguage('pt')}
@@ -148,46 +143,42 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 space-y-2 animate-fadeIn">
+        <div className="lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 space-y-3 animate-fadeIn text-left">
           <button
             onClick={() => handleNav('b2b')}
-            className={`w-full text-left font-bold py-2.5 px-3 rounded-lg flex items-center justify-between text-sm ${
-              currentView === 'b2b' ? 'bg-slate-800 text-blue-400' : 'text-slate-200 hover:text-white'
+            className={`w-full text-left text-sm font-semibold transition-colors py-1 ${
+              currentView === 'b2b' ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
             }`}
           >
-            <span>Empresas (Recrutamento B2B)</span>
-            <Building2 className="w-4 h-4 text-blue-400" />
+            Empresas
           </button>
 
           <button
             onClick={() => handleNav('professionals')}
-            className={`w-full text-left font-bold py-2.5 px-3 rounded-lg flex items-center justify-between text-sm ${
-              currentView === 'professionals'
-                ? 'bg-blue-600 text-white'
-                : 'text-blue-400 bg-blue-950/40 border border-blue-500/30'
+            className={`w-full text-left text-sm font-semibold transition-colors py-1 ${
+              currentView === 'professionals' ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
             }`}
           >
-            <span>Profissionais (Mentoria & Job Hunting)</span>
-            <Sparkles className="w-4 h-4" />
+            Profissionais
           </button>
 
           <button
-            onClick={() => handleNav(currentView, 'vagas')}
-            className="w-full text-left font-semibold text-slate-300 py-2 px-3 hover:text-blue-400 text-sm"
+            onClick={() => handleNav('professionals', 'vagas')}
+            className="w-full text-left text-sm font-semibold text-slate-300 hover:text-white transition-colors py-1"
           >
-            Vagas Internacionais
+            Vagas
           </button>
 
           <button
             onClick={() => handleNav(currentView, 'sobre')}
-            className="w-full text-left font-semibold text-slate-300 py-2 px-3 hover:text-blue-400 text-sm"
+            className="w-full text-left text-sm font-semibold text-slate-300 hover:text-white transition-colors py-1"
           >
-            Sobre Ricardo Oliveira
+            Sobre
           </button>
 
           <button
             onClick={() => handleNav(currentView, 'contato')}
-            className="w-full text-left font-semibold text-slate-300 py-2 px-3 hover:text-blue-400 text-sm"
+            className="w-full text-left text-sm font-semibold text-slate-300 hover:text-white transition-colors py-1"
           >
             Contato
           </button>
@@ -199,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setIsMobileMenuOpen(false);
                   onOpenLeadsExport();
                 }}
-                className="w-full text-left text-xs text-slate-500 hover:text-slate-300 py-1 px-3"
+                className="w-full text-left text-xs text-slate-500 hover:text-slate-300 py-1"
               >
                 Painel Interno de Leads (CSV)
               </button>

@@ -21,7 +21,7 @@ export const App: React.FC = () => {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
 
-      if (path.includes('/profissionais') || path.includes('/career-mentoring') || hash.includes('#profissionais')) {
+      if (path.includes('/profissionais') || path.includes('/career-mentoring') || hash.includes('#profissionais') || hash.includes('#vagas')) {
         setCurrentView('professionals');
       } else {
         setCurrentView('b2b');
@@ -39,10 +39,12 @@ export const App: React.FC = () => {
   }, []);
 
   const handleNavigate = (view: ViewMode, sectionId?: string) => {
-    setCurrentView(view);
+    // O mural de vagas fica exclusivamente em Profissionais
+    const effectiveView = sectionId === 'vagas' ? 'professionals' : view;
+    setCurrentView(effectiveView);
 
-    // Atualiza a URL sem recarregar
-    const targetPath = view === 'professionals' ? '/profissionais' : '/empresas';
+    // Atualiza a URL sem recarregar a página
+    const targetPath = effectiveView === 'professionals' ? '/profissionais' : '/empresas';
     window.history.pushState({}, '', targetPath);
 
     if (sectionId) {
@@ -57,7 +59,7 @@ export const App: React.FC = () => {
             behavior: 'smooth',
           });
         }
-      }, 80);
+      }, 100);
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -68,7 +70,7 @@ export const App: React.FC = () => {
       {/* WCAG Accessible skip link */}
       <SkipLink />
 
-      {/* Distinct Dark Executive Header with Menu */}
+      {/* Header com botões link padronizados */}
       <Navbar
         currentView={currentView}
         onNavigate={handleNavigate}
@@ -79,14 +81,14 @@ export const App: React.FC = () => {
       <main id="main-content" className="flex-grow flex flex-col">
         {currentView === 'professionals' ? (
           <ProfessionalsPage
-            onNavigateToJobs={() => handleNavigate('b2b', 'vagas')}
+            onNavigateToJobs={() => handleNavigate('professionals', 'vagas')}
           />
         ) : (
           <B2BPage />
         )}
       </main>
 
-      {/* Distinct Dark Footer */}
+      {/* Footer corporativo */}
       <Footer
         onNavigate={handleNavigate}
         onOpenLeadsExport={() => setIsLeadsExportOpen(true)}
@@ -100,7 +102,7 @@ export const App: React.FC = () => {
         />
       )}
 
-      {/* Painel Administrativo de Leads de Mentoria */}
+      {/* Painel Administrativo de Leads */}
       {isLeadsExportOpen && (
         <LeadsExportModal onClose={() => setIsLeadsExportOpen(false)} />
       )}
