@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield } from 'lucide-react';
+import { Shield, Check } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const MentoringDeliverables: React.FC = () => {
@@ -8,18 +8,21 @@ export const MentoringDeliverables: React.FC = () => {
 
   const phases = [
     {
+      stepNumber: "01",
       phase: isEn ? "Phase 01" : "Fase 01",
       title: t.mentoring.deliverables.phase1Title,
       desc: t.mentoring.deliverables.phase1Desc,
       items: t.mentoring.deliverables.phase1Items,
     },
     {
+      stepNumber: "02",
       phase: isEn ? "Phase 02" : "Fase 02",
       title: t.mentoring.deliverables.phase2Title,
       desc: t.mentoring.deliverables.phase2Desc,
       items: t.mentoring.deliverables.phase2Items,
     },
     {
+      stepNumber: "03",
       phase: isEn ? "Phase 03" : "Fase 03",
       title: t.mentoring.deliverables.phase3Title,
       desc: t.mentoring.deliverables.phase3Desc,
@@ -29,7 +32,7 @@ export const MentoringDeliverables: React.FC = () => {
 
   return (
     <section className="py-20 lg:py-28 bg-slate-950 text-white border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-16 text-left">
@@ -44,44 +47,72 @@ export const MentoringDeliverables: React.FC = () => {
           </p>
         </div>
 
-        {/* 3-Phase Interactive Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 text-left">
-          {phases.map((phase, idx) => (
-            <div 
-              key={idx}
-              className="p-8 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
-                  <span className="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider">
-                    {phase.phase}
-                  </span>
-                  <span className="w-2 h-2 rounded-full bg-blue-500" />
+        {/* Vertical Steps Progression (De Cima para Baixo) */}
+        <div className="relative mb-16">
+          {/* Connecting Vertical Line */}
+          <div 
+            className="hidden sm:block absolute top-6 bottom-6 left-6 w-0.5 bg-slate-800 -translate-x-1/2" 
+            aria-hidden="true" 
+          />
+
+          <div className="space-y-8">
+            {phases.map((phase, idx) => (
+              <div key={idx} className="relative flex flex-col sm:flex-row items-start gap-5 sm:gap-8 text-left">
+                {/* Step Indicator Node */}
+                <div className="relative z-10 flex items-center justify-center w-12 h-12 rounded-lg bg-slate-900 border border-slate-700 text-blue-400 font-mono font-bold text-sm shrink-0 shadow-md">
+                  {phase.stepNumber}
                 </div>
 
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 leading-snug">
-                  {phase.title}
-                </h3>
-                
-                <p className="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">
-                  {phase.desc}
-                </p>
+                {/* Step Content Card */}
+                <div className="flex-1 w-full bg-slate-900/90 border border-slate-800 rounded-lg p-6 sm:p-8 shadow-sm hover:border-slate-700 transition-colors">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                    <span className="text-xs font-mono font-semibold text-blue-400 uppercase tracking-widest">
+                      {phase.phase}
+                    </span>
+                    <span className="text-xs text-slate-500 font-mono">
+                      {idx === 0 && (isEn ? "Pillar 1 • Foundation" : "Etapa 1 • Fundação")}
+                      {idx === 1 && (isEn ? "Pillar 2 • Market Engine" : "Etapa 2 • Motor de Mercado")}
+                      {idx === 2 && (isEn ? "Pillar 3 • Offer Closing" : "Etapa 3 • Fechamento de Oferta")}
+                    </span>
+                  </div>
 
-                <ul className="space-y-3.5 text-xs sm:text-sm text-slate-300">
-                  {phase.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0" />
-                      <span className="leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight">
+                    {phase.title}
+                  </h3>
+
+                  <p className="text-sm text-slate-300 mb-6 leading-relaxed">
+                    {phase.desc}
+                  </p>
+
+                  {/* Structured Deliverables Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {phase.items.map((item, i) => (
+                      <div 
+                        key={i} 
+                        className="bg-slate-950/70 border border-slate-800/80 rounded-md p-4 flex flex-col justify-start"
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                            <Check className="w-3 h-3" />
+                          </div>
+                          <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400">
+                            {isEn ? `Deliverable 0${i + 1}` : `Entrega 0${i + 1}`}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-300 leading-relaxed">
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Legal Disclaimer Box */}
-        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-left">
+        <div className="p-6 rounded-lg bg-slate-900/60 border border-slate-800 text-left">
           <div className="flex items-start gap-3.5">
             <Shield className="w-5 h-5 text-slate-400 shrink-0 mt-0.5" />
             <div className="space-y-1">

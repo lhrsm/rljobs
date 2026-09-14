@@ -37,7 +37,7 @@ export const SubmissionResultModal: React.FC<SubmissionResultModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
       <div 
-        className="relative bg-slate-900 border border-slate-700 rounded-3xl max-w-xl w-full p-6 sm:p-8 text-left shadow-2xl overflow-hidden animate-scaleUp"
+        className="relative bg-slate-900 border border-slate-700/80 rounded-lg max-w-xl w-full p-6 sm:p-8 text-left shadow-2xl overflow-hidden animate-scaleUp"
         role="dialog"
         aria-modal="true"
       >

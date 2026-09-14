@@ -46,12 +46,12 @@ export const QualificationModal: React.FC<QualificationModalProps> = ({
       aria-modal="true"
     >
       <div 
-        className="relative bg-slate-900 border border-slate-700/80 rounded-3xl max-w-4xl w-full shadow-2xl overflow-hidden my-4 sm:my-8 text-left animate-scaleUp"
+        className="relative bg-slate-900 border border-slate-700/80 rounded-lg max-w-4xl w-full shadow-2xl overflow-hidden my-4 sm:my-8 text-left animate-scaleUp"
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 z-20 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 transition-colors cursor-pointer"
+          className="absolute top-5 right-5 z-20 text-slate-400 hover:text-white p-2 rounded-md bg-slate-800/80 hover:bg-slate-700 transition-colors cursor-pointer"
           aria-label={isEn ? "Close form" : "Fechar formulário"}
         >
           <X className="w-5 h-5" />
