@@ -1,0 +1,40 @@
+# RL Executive Search — Full Reference & Architecture Documentation
+
+## Institutional Details
+- Organization: RL Executive Search
+- Managing Director & Headhunter: Ricardo Soares Oliveira
+- Headquarters & Operations: Portugal (Lisbon / Porto Hub) & Brazil (São Paulo Hub)
+- Target Markets: United States (San Francisco, New York, Seattle, Austin), European Union (Portugal, Ireland, UK, Germany, Netherlands), Brazil
+- Primary Website: https://licenciadorh.com.br
+- WhatsApp: +351 926 527 934 (https://wa.me/351926527934)
+- Email: contato@licenciadorh.com.br / Ricardoliveira2974@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ricardosoaresoliveira/
+
+## Platform Capabilities
+1. Real-time Aggregated & Curated Job Board with 547+ live global tech opportunities:
+   - 335 AI, LLM, MLOps, and Data Quality positions from top US AI ecosystems.
+   - 159 Software Engineering, Cloud, and Product roles from European and Brazilian enterprise networks.
+   - 53 US remote contractor positions from OnStrider Network.
+2. Confidentiality & Executive White-Labeling:
+   - Positions presented with industry descriptors (e.g., Silicon Valley AI Lab, US FinTech Unicorn, European Tech Group).
+3. Candidate Application Engine:
+   - Automated protocol generation (RL-APP-XXXXXX).
+   - Direct 1-click WhatsApp notification dispatch to Ricardo Oliveira.
+   - Resume synchronization with Google Drive and notification dispatch.
+4. B2B Corporate Briefing:
+   - 14-day average time to shortlist for companies needing Senior/Staff engineers and Tech Leads.
+   - 95%+ talent retention rate over 12 months.
+
+## Core Keywords & Semantic Clusters
+- Tech Headhunter Internacional
+- Executive Search Tecnologia Brasil Europa EUA
+- Vagas em Dólar para Brasileiros
+- Vagas Remotas EUA USD
+- Salários Tech em Dólar e Euro
+- Headhunting Staff Engineer e Tech Lead
+- Recrutamento Executivo para Startups e Unicornios
+- Contratação B2B Internacional PJ
+- Consultoria de Carreira Internacional Ricardo Oliveira
+
+## Supported Technologies
+Java, Spring Boot, Python, PyTorch, LangChain, OpenAI, LLM, RLHF, Go (Golang), Rust, TypeScript, React, Next.js, Node.js, Angular, Vue.js, C#, .NET Core, Kotlin, Swift, Flutter, React Native, AWS, Google Cloud (GCP), Microsoft Azure, Kubernetes, Docker, Terraform, Kafka, Snowflake, PostgreSQL, Datadog, CI/CD, Microservices, System Architecture, Technical Product Management, UI/UX Design Systems.
