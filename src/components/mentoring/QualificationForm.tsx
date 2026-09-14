@@ -28,9 +28,10 @@ import { saveMentoringLead } from '../../services/mentoringService';
 
 interface QualificationFormProps {
   onSuccess: (submission: ReturnType<typeof saveMentoringLead>) => void;
+  isInsideModal?: boolean;
 }
 
-export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess }) => {
+export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess, isInsideModal = false }) => {
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -201,25 +202,20 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess 
   const isProcessConditionalActive =
     formData.workRightTargetMarket === 'Em processo' || formData.migrationDocument === 'Em processo';
 
-  return (
-    <section id="pre-qualificacao" className="py-16 lg:py-24 bg-slate-950 text-white scroll-mt-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-bold uppercase tracking-widest text-blue-400 block mb-2">
-            Avaliação Confidencial
-          </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            Formulário de Pré-Qualificação
-          </h2>
-          <p className="mt-2 text-sm text-slate-300">
-            Preencha os dados abaixo para que a liderança da RL Headhunter avalie a viabilidade da sua transição e a aderência aos mercados internacionais desejados.
-          </p>
-        </div>
-
-        {/* Form Box */}
-        <div className="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl p-6 sm:p-10 text-left">
+  const content = (
+    <div className={isInsideModal ? "text-left" : "bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl p-6 sm:p-10 text-left"}>
+      {/* Header */}
+      <div className="text-center max-w-2xl mx-auto mb-8">
+        <span className="text-xs font-bold uppercase tracking-widest text-blue-400 block mb-1">
+          Avaliação Confidencial
+        </span>
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+          Formulário de Pré-Qualificação
+        </h2>
+        <p className="mt-1.5 text-xs sm:text-sm text-slate-300">
+          Preencha os dados abaixo para que a liderança da RL Headhunter avalie a viabilidade da sua transição e a aderência aos mercados internacionais desejados.
+        </p>
+      </div>
           
           {/* Progress Bar & Step Tabs */}
           <div className="mb-8">
@@ -884,8 +880,17 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess 
             </div>
 
           </form>
-        </div>
+    </div>
+  );
 
+  if (isInsideModal) {
+    return content;
+  }
+
+  return (
+    <section id="pre-qualificacao" className="py-16 lg:py-24 bg-slate-950 text-white scroll-mt-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {content}
       </div>
     </section>
   );
