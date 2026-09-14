@@ -13,7 +13,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigate,
   onOpenLeadsExport,
 }) => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleNav = (view: 'b2b' | 'professionals', sectionId?: string) => {
@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'text-slate-300 hover:text-white'
               }`}
             >
-              Empresas
+              {t.nav.companies}
             </button>
 
             {/* 2. Profissionais */}
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'text-slate-300 hover:text-white'
               }`}
             >
-              Profissionais
+              {t.nav.professionals}
             </button>
 
             {/* 3. Vagas */}
@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNav('professionals', 'vagas')}
               className="text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
-              Vagas
+              {t.nav.jobs}
             </button>
 
             {/* 4. Sobre */}
@@ -89,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNav(currentView, 'sobre')}
               className="text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
-              Sobre
+              {t.nav.about}
             </button>
 
             {/* 5. Contato */}
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNav(currentView, 'contato')}
               className="text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
-              Contato
+              {t.nav.contact}
             </button>
           </nav>
 
@@ -152,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               currentView === 'b2b' ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
             }`}
           >
-            Empresas
+            {t.nav.companies}
           </button>
 
           <button
@@ -161,28 +161,28 @@ export const Navbar: React.FC<NavbarProps> = ({
               currentView === 'professionals' ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
             }`}
           >
-            Profissionais
+            {t.nav.professionals}
           </button>
 
           <button
             onClick={() => handleNav('professionals', 'vagas')}
             className="w-full text-left text-sm font-semibold text-slate-300 hover:text-white transition-colors py-1"
           >
-            Vagas
+            {t.nav.jobs}
           </button>
 
           <button
             onClick={() => handleNav(currentView, 'sobre')}
             className="w-full text-left text-sm font-semibold text-slate-300 hover:text-white transition-colors py-1"
           >
-            Sobre
+            {t.nav.about}
           </button>
 
           <button
             onClick={() => handleNav(currentView, 'contato')}
             className="w-full text-left text-sm font-semibold text-slate-300 hover:text-white transition-colors py-1"
           >
-            Contato
+            {t.nav.contact}
           </button>
 
           {onOpenLeadsExport && (

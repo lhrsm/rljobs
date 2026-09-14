@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 import { QualificationForm } from './QualificationForm';
 import { MentoringLeadSubmission } from '../../types/mentoring';
 
@@ -14,6 +15,8 @@ export const QualificationModal: React.FC<QualificationModalProps> = ({
   onClose,
   onSuccess,
 }) => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -49,7 +52,7 @@ export const QualificationModal: React.FC<QualificationModalProps> = ({
         <button
           onClick={onClose}
           className="absolute top-5 right-5 z-20 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 transition-colors cursor-pointer"
-          aria-label="Fechar formulário"
+          aria-label={isEn ? "Close form" : "Fechar formulário"}
         >
           <X className="w-5 h-5" />
         </button>

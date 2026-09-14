@@ -1,28 +1,25 @@
 export const translations = {
   pt: {
     nav: {
-      jobs: "Vagas Internacionais",
-      about: "Sobre Ricardo",
-      consultation: "Falar com Ricardo",
-      registerCV: "Cadastrar CV",
+      companies: "Empresas",
+      professionals: "Profissionais",
+      jobs: "Vagas",
+      about: "Sobre",
+      contact: "Contato",
       tagline: "International Headhunter & Career Mentor",
     },
     hero: {
-      badge: "Tech Headhunting & Mentoria Internacional",
+      badge: "Executive Search & Tech Headhunting Global",
       roleTitle: "International Headhunter & Career Mentor",
       name: "Ricardo Oliveira",
-      headline: "Conectando líderes e especialistas tech a oportunidades globais.",
-      subheadline: "Executive Search e Mentoria de Carreira para vagas nos EUA, Europa e Brasil com contratação em moeda forte (USD/EUR) e compliance total.",
-      impactQuote: "Estratégia, discrição e visão global para conectar talentos excepcionais aos desafios que transformam indústrias.",
-      primaryCta: "Ver Vagas Internacionais",
-      secondaryCta: "Falar no WhatsApp",
+      headline: "Contrate os Melhores Talentos Tech",
+      subheadline: "Hunting de precisão para posições seniores e C-Level com shortlist em 14 dias nos EUA, Europa e Brasil. Processos conduzidos com total discrição, compliance internacional e garantia de reposição.",
+      hireCta: "Contratar os Melhores Talentos Tech",
       metrics: {
-        partners: "+500 Empresas",
-        partnersSub: "EUA, Europa e Brasil",
+        partners: "+500",
+        partnersSub: "Empresas Parceiras",
         countries: "+15 Países",
-        countriesSub: "Contratações Cross-Border",
-        retention: "95% Retenção",
-        retentionSub: "Acompanhamento Contínuo",
+        countriesSub: "EUA, Europa e Brasil",
         timeToHire: "14 Dias",
         timeToHireSub: "Média para Shortlist",
       }
@@ -224,32 +221,98 @@ export const translations = {
       details: "Detalhes",
       send: "Enviar",
       saving: "Enviando..."
+    },
+    mentoring: {
+      hero: {
+        serviceBadge: "International Job Hunting & Career Mentoring",
+        headline: "Sua experiência já está pronta para o mercado internacional?",
+        subheadline: "Programa personalizado de Job Hunting e posicionamento internacional para profissionais experientes que já possuem cidadania europeia, visto, residência ou autorização válida de trabalho no mercado-alvo, ou que estejam em fase avançada de obtenção da documentação.",
+        marketsLabel: "Mercados em Destaque:",
+        marketsList: "Portugal • Espanha • Europa • Brasil • Global Remote",
+        primaryCta: "VERIFICAR SE MEU PERFIL É ELEGÍVEL",
+        secondaryCta: "Ver Vagas Internacionais",
+        footnote: "Análise preliminar de elegibilidade sigilosa e individualizada",
+      },
+      fit: {
+        badge: "Critérios de Seleção & Elegibilidade",
+        title: "Este programa é para você?",
+        subtitle: "Nosso foco é exclusivamente em profissionais com prontidão documental e maturidade de carreira para acelerar contratações internacionais sem barreiras legais.",
+        col1Title: "1. Senioridade & Maturidade",
+        col1Sub: "Perfis com base sólida de atuação",
+        col1Items: [
+          "Mais de 5 a 8 anos de experiência comprovada no Brasil ou exterior.",
+          "Atuação consolidada em tecnologia, engenharia, produto, dados ou liderança executiva.",
+          "Objetivo claro de atuar em empresas globais, scale-ups ou posições remotas internacionais."
+        ],
+        col2Title: "2. Documentação & Idiomas",
+        col2Sub: "Prontidão legal para o mercado-alvo",
+        col2Items: [
+          "Cidadania europeia (portuguesa, italiana, espanhola, etc.) ou visto/residência válida.",
+          "Processo de autorização de trabalho em andamento ou elegibilidade direta.",
+          "Inglês ou espanhol profissional para conduzir entrevistas técnicas e de liderança."
+        ],
+        alertTitle: "Transparência RL Jobs",
+        alertText: "Não vendemos promessas de vistos nem vagas garantidas. Conduzimos uma mentoria executiva de alta intensidade para profissionais documentalmente aptos a competir no topo do mercado internacional.",
+        ctaButton: "VERIFICAR SE MEU PERFIL É ELEGÍVEL",
+      },
+      deliverables: {
+        badge: "Metodologia Executiva 360°",
+        title: "O que o programa entrega",
+        subtitle: "Estrutura completa em 3 fases para posicionar, expor e negociar suas ofertas internacionais com decisores globais.",
+        phase1: "Fase 01",
+        phase1Title: "Diagnóstico & Posicionamento",
+        phase1Desc: "Estruturação dos pilares da sua narrativa executiva internacional antes de qualquer abordagem ao mercado.",
+        phase1Items: [
+          "Diagnóstico detalhado de carreira e definição de proposta de valor internacional.",
+          "Mapeamento de cargos estratégicos, mercados, países e lista de empresas-alvo prioritárias.",
+          "Reestruturação completa do CV no formato internacional aceito por ATS e decisores globais."
+        ],
+        phase2: "Fase 02",
+        phase2Title: "Ativos & Busca Ativa (Job Hunting)",
+        phase2Desc: "Implementação das ferramentas e táticas para identificação de vagas abertas e oportunidades no mercado oculto.",
+        phase2Items: [
+          "Otimização do LinkedIn para atrair abordagens espontâneas de recrutadores internacionais.",
+          "Estratégia proativa de Job Hunting com filtros e métodos de busca direcionada.",
+          "Networking e templates de abordagem profissional para contato com Headhunters e Hiring Managers."
+        ],
+        phase3: "Fase 03",
+        phase3Title: "Entrevistas & Negociação",
+        phase3Desc: "Preparação avançada para passar pelos crivos técnicos, comportamentais e fechar o melhor pacote em moeda forte.",
+        phase3Items: [
+          "Simulações de entrevistas executivas (Mock Interviews) em inglês com feedbacks estratégicos.",
+          "Táticas de negociação salarial em moeda forte (USD/EUR), bônus, equity e benefícios.",
+          "Acompanhamento e suporte consultivo contínuo até a assinatura da melhor oferta."
+        ],
+        disclaimer: "Metodologia consultiva individualizada focada em conversão real e autoridade profissional.",
+      },
+      modal: {
+        title: "Formulário de Pré-Qualificação",
+        subtitle: "International Job Hunting & Career Mentoring",
+        close: "Fechar formulário",
+      }
     }
   },
   en: {
     nav: {
-      jobs: "Global Jobs",
-      about: "About Ricardo",
-      consultation: "Talk to Ricardo",
-      registerCV: "Submit CV",
+      companies: "Companies",
+      professionals: "Professionals",
+      jobs: "Jobs",
+      about: "About",
+      contact: "Contact",
       tagline: "International Headhunter & Career Mentor",
     },
     hero: {
-      badge: "Tech Headhunting & Global Career Mentorship",
+      badge: "Global Executive Search & Tech Headhunting",
       roleTitle: "International Headhunter & Career Mentor",
       name: "Ricardo Oliveira",
-      headline: "Connecting tech leaders & specialists to global opportunities.",
-      subheadline: "Executive Search and Career Advisory for top positions in the US, Europe, and Brazil with strong currency compensation (USD/EUR) and complete compliance.",
-      impactQuote: "Strategic vision, discretion, and global reach connecting exceptional talent to industry-shaping challenges.",
-      primaryCta: "View Global Jobs",
-      secondaryCta: "Talk on WhatsApp",
+      headline: "Hire Top Tech Talent",
+      subheadline: "Precision executive search and headhunting for senior & C-Level tech roles with shortlist in 14 days across the US, Europe, and Brazil. Strict discretion, international compliance, and replacement guarantee.",
+      hireCta: "Hire Top Tech Talent",
       metrics: {
-        partners: "+500 Companies",
-        partnersSub: "US, Europe & Brazil",
+        partners: "+500",
+        partnersSub: "Partner Companies",
         countries: "+15 Countries",
-        countriesSub: "Cross-Border Placements",
-        retention: "95% Retention",
-        retentionSub: "Long-term Support",
+        countriesSub: "US, Europe & Brazil",
         timeToHire: "14 Days",
         timeToHireSub: "Avg to Shortlist",
       }
@@ -451,6 +514,75 @@ export const translations = {
       details: "Details",
       send: "Send",
       saving: "Submitting..."
+    },
+    mentoring: {
+      hero: {
+        serviceBadge: "International Job Hunting & Career Mentoring",
+        headline: "Is your experience ready for the international market?",
+        subheadline: "Customized Job Hunting and international positioning program for seasoned professionals who already hold European citizenship, visa, residency, or valid work permit in the target market, or are in advanced stages of obtaining documentation.",
+        marketsLabel: "Featured Markets:",
+        marketsList: "Portugal • Spain • Europe • Brazil • Global Remote",
+        primaryCta: "CHECK IF MY PROFILE IS ELIGIBLE",
+        secondaryCta: "View International Jobs",
+        footnote: "Confidential and individualized preliminary eligibility assessment",
+      },
+      fit: {
+        badge: "Selection & Eligibility Criteria",
+        title: "Is this program right for you?",
+        subtitle: "Our focus is exclusively on professionals with legal work authorization and career maturity to accelerate international hiring without barriers.",
+        col1Title: "1. Seniority & Maturity",
+        col1Sub: "Profiles with solid track records",
+        col1Items: [
+          "Over 5 to 8 years of proven experience in Brazil or abroad.",
+          "Consolidated background in software engineering, tech leadership, product, or data.",
+          "Clear goal of joining global tech companies, scale-ups, or international remote roles."
+        ],
+        col2Title: "2. Documentation & Languages",
+        col2Sub: "Legal readiness for target market",
+        col2Items: [
+          "European citizenship (Portuguese, Italian, Spanish, etc.) or valid visa/residency.",
+          "Work authorization process in progress or direct work eligibility.",
+          "Professional working proficiency in English or Spanish for technical & leadership interviews."
+        ],
+        alertTitle: "RL Jobs Transparency",
+        alertText: "We do not sell visa guarantees or promised jobs. We deliver high-intensity executive mentorship for professionals who are legally qualified to compete at the top of the international market.",
+        ctaButton: "CHECK IF MY PROFILE IS ELIGIBLE",
+      },
+      deliverables: {
+        badge: "Executive 360° Methodology",
+        title: "What the program delivers",
+        subtitle: "A comprehensive 3-phase framework to position, expose, and negotiate your international offers with global decision makers.",
+        phase1: "Phase 01",
+        phase1Title: "Diagnostics & Positioning",
+        phase1Desc: "Building the pillars of your international executive narrative before approaching the market.",
+        phase1Items: [
+          "In-depth career diagnosis and international value proposition definition.",
+          "Strategic role, target country, and prioritized company mapping.",
+          "Complete CV restructuring tailored for ATS and global hiring executives."
+        ],
+        phase2: "Phase 02",
+        phase2Title: "Assets & Active Job Hunting",
+        phase2Desc: "Deploying tools and outreach tactics to tap into public postings and the hidden job market.",
+        phase2Items: [
+          "LinkedIn optimization to attract unsolicited inbound recruiter reach-outs.",
+          "Proactive Job Hunting strategy with advanced search filters and direct targeting.",
+          "Professional networking approach templates for Headhunters and Hiring Managers."
+        ],
+        phase3: "Phase 03",
+        phase3Title: "Interviews & Offer Negotiation",
+        phase3Desc: "Advanced preparation to excel in technical and behavioral rounds and secure top hard currency packages.",
+        phase3Items: [
+          "Executive mock interviews in English with strategic performance feedback.",
+          "Salary negotiation tactics for USD/EUR, sign-on bonuses, equity, and benefits.",
+          "Continuous advisory support until signing the best international offer."
+        ],
+        disclaimer: "Individualized consultative methodology focused on real conversion and career authority.",
+      },
+      modal: {
+        title: "Pre-Qualification Form",
+        subtitle: "International Job Hunting & Career Mentoring",
+        close: "Close form",
+      }
     }
   }
 };

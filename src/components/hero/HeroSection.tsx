@@ -22,7 +22,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenHireModal }) => 
             {/* Service Label */}
             <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-blue-700 mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-700" />
-              <span>Executive Search & Tech Headhunting Global</span>
+              <span>{t.hero.badge}</span>
             </div>
 
             {/* Name */}
@@ -34,11 +34,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenHireModal }) => 
 
             {/* Value Proposition */}
             <p className="text-lg sm:text-xl text-slate-800 font-semibold leading-snug mb-3">
-              Contrate os Melhores Talentos Tech
+              {t.hero.headline}
             </p>
 
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-8 max-w-xl">
-              Hunting de precisão para posições seniores e C-Level com shortlist em 14 dias nos EUA, Europa e Brasil. Processos conduzidos com total discrição, compliance internacional e garantia de reposição.
+              {t.hero.subheadline}
             </p>
 
             {/* Single CTA Button: Contratar os Melhores Talentos Tech */}
@@ -49,7 +49,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenHireModal }) => 
                 className="inline-flex items-center justify-center gap-2.5 h-12 px-7 text-sm font-bold text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-800 rounded-xl shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
               >
                 <Briefcase className="w-4 h-4" />
-                <span>Contratar os Melhores Talentos Tech</span>
+                <span>{t.hero.hireCta}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -58,26 +58,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenHireModal }) => 
             <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-4 text-left">
               <div>
                 <div className="text-xl font-extrabold text-slate-950">
-                  +500
+                  {t.hero.metrics.partners}
                 </div>
                 <div className="text-xs text-slate-500 font-medium">
-                  Empresas Parceiras
+                  {t.hero.metrics.partnersSub}
                 </div>
               </div>
               <div>
                 <div className="text-xl font-extrabold text-slate-950">
-                  +15 Países
+                  {t.hero.metrics.countries}
                 </div>
                 <div className="text-xs text-slate-500 font-medium">
-                  EUA, Europa e Brasil
+                  {t.hero.metrics.countriesSub}
                 </div>
               </div>
               <div>
                 <div className="text-xl font-extrabold text-slate-950">
-                  14 Dias
+                  {t.hero.metrics.timeToHire}
                 </div>
                 <div className="text-xs text-slate-500 font-medium">
-                  Média para Shortlist
+                  {t.hero.metrics.timeToHireSub}
                 </div>
               </div>
             </div>

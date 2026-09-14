@@ -25,6 +25,7 @@ import {
   RelocationAvailability 
 } from '../../types/mentoring';
 import { saveMentoringLead } from '../../services/mentoringService';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface QualificationFormProps {
   onSuccess: (submission: ReturnType<typeof saveMentoringLead>) => void;
@@ -32,6 +33,9 @@ interface QualificationFormProps {
 }
 
 export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess, isInsideModal = false }) => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
+
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -93,7 +97,7 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
       const validExtensions = ['.pdf', '.docx', '.doc'];
       const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
       if (!validExtensions.includes(ext)) {
-        setErrorMessage('Por favor, envie o currículo em formato PDF ou DOCX.');
+        setErrorMessage(isEn ? 'Please upload your CV in PDF or DOCX format.' : 'Por favor, envie o currículo em formato PDF ou DOCX.');
         return;
       }
       setErrorMessage(null);
@@ -109,65 +113,65 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
     setErrorMessage(null);
     if (step === 1) {
       if (!formData.fullName.trim()) {
-        setErrorMessage('Por favor, informe seu nome completo.');
+        setErrorMessage(isEn ? 'Please provide your full name.' : 'Por favor, informe seu nome completo.');
         return false;
       }
       if (!formData.email.trim() || !formData.email.includes('@')) {
-        setErrorMessage('Por favor, insira um e-mail corporativo ou pessoal válido.');
+        setErrorMessage(isEn ? 'Please enter a valid work or personal email.' : 'Por favor, insira um e-mail corporativo ou pessoal válido.');
         return false;
       }
       if (!formData.phoneWhatsApp.trim()) {
-        setErrorMessage('Por favor, informe seu WhatsApp com código do país (ex: +351 ou +55).');
+        setErrorMessage(isEn ? 'Please provide your WhatsApp with country code (e.g., +351 or +1).' : 'Por favor, informe seu WhatsApp com código do país (ex: +351 ou +55).');
         return false;
       }
       if (!formData.linkedinUrl.trim()) {
-        setErrorMessage('Por favor, informe a URL do seu perfil no LinkedIn.');
+        setErrorMessage(isEn ? 'Please provide your LinkedIn profile URL.' : 'Por favor, informe a URL do seu perfil no LinkedIn.');
         return false;
       }
       if (!formData.currentCountry.trim()) {
-        setErrorMessage('Por favor, informe o país onde você reside atualmente.');
+        setErrorMessage(isEn ? 'Please indicate your current country of residence.' : 'Por favor, informe o país onde você reside atualmente.');
         return false;
       }
     }
 
     if (step === 2) {
       if (!formData.currentRole.trim()) {
-        setErrorMessage('Por favor, informe seu cargo atual ou último cargo.');
+        setErrorMessage(isEn ? 'Please state your current or most recent role.' : 'Por favor, informe seu cargo atual ou último cargo.');
         return false;
       }
       if (!formData.professionalArea.trim()) {
-        setErrorMessage('Por favor, selecione ou informe sua área profissional.');
+        setErrorMessage(isEn ? 'Please select or provide your professional area.' : 'Por favor, selecione ou informe sua área profissional.');
         return false;
       }
       if (!formData.mainRelocationChallenge.trim() || formData.mainRelocationChallenge.length < 15) {
-        setErrorMessage('Por favor, descreva em algumas palavras sua principal dificuldade ou desafio na recolocação internacional.');
+        setErrorMessage(isEn ? 'Please describe in a few words your primary challenge in international job hunting.' : 'Por favor, descreva em algumas palavras sua principal dificuldade ou desafio na recolocação internacional.');
         return false;
       }
     }
 
     if (step === 3) {
       if (formData.targetMarkets.length === 0) {
-        setErrorMessage('Selecione pelo menos um país ou mercado-alvo de interesse.');
+        setErrorMessage(isEn ? 'Select at least one target country or market of interest.' : 'Selecione pelo menos um país ou mercado-alvo de interesse.');
         return false;
       }
       const isDocInProcess = formData.workRightTargetMarket === 'Em processo' || formData.migrationDocument === 'Em processo';
       if (isDocInProcess && !formData.migrationProcessEta?.trim()) {
-        setErrorMessage('Como sua documentação está em processo, por favor informe a previsão estimada de conclusão.');
+        setErrorMessage(isEn ? 'Since your documentation is in process, please provide an estimated completion timeline.' : 'Como sua documentação está em processo, por favor informe a previsão estimada de conclusão.');
         return false;
       }
     }
 
     if (step === 4) {
       if (!formData.targetSalary.trim()) {
-        setErrorMessage('Por favor, informe sua remuneração pretendida (valor, moeda e periodicidade).');
+        setErrorMessage(isEn ? 'Please provide your target compensation (amount, currency & period).' : 'Por favor, informe sua remuneração pretendida (valor, moeda e periodicidade).');
         return false;
       }
       if (!formData.cvFileName) {
-        setErrorMessage('O upload do currículo (PDF ou DOCX) é obrigatório para avaliação do perfil.');
+        setErrorMessage(isEn ? 'Uploading your CV (PDF or DOCX) is required for profile assessment.' : 'O upload do currículo (PDF ou DOCX) é obrigatório para avaliação do perfil.');
         return false;
       }
       if (!formData.privacyConsent) {
-        setErrorMessage('Você deve autorizar o consentimento para tratamento dos dados para avançar.');
+        setErrorMessage(isEn ? 'You must consent to data processing to proceed.' : 'Você deve autorizar o consentimento para tratamento dos dados para avançar.');
         return false;
       }
     }
@@ -207,57 +211,61 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-8">
         <span className="text-xs font-bold uppercase tracking-widest text-blue-400 block mb-1">
-          Avaliação Confidencial
+          {isEn ? "Confidential Assessment" : "Avaliação Confidencial"}
         </span>
         <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-          Formulário de Pré-Qualificação
+          {isEn ? "Pre-Qualification Form" : "Formulário de Pré-Qualificação"}
         </h2>
         <p className="mt-1.5 text-xs sm:text-sm text-slate-300">
-          Preencha os dados abaixo para que a liderança da RL Headhunter avalie a viabilidade da sua transição e a aderência aos mercados internacionais desejados.
+          {isEn 
+            ? "Complete the details below so RL Headhunter leadership can assess the feasibility of your transition and alignment with your target international markets."
+            : "Preencha os dados abaixo para que a liderança da RL Headhunter avalie a viabilidade da sua transição e a aderência aos mercados internacionais desejados."}
         </p>
       </div>
           
-          {/* Progress Bar & Step Tabs */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between text-xs font-semibold text-slate-400 mb-2">
-              <span className="text-blue-400 font-bold">Etapa {currentStep} de 4</span>
-              <span>
-                {currentStep === 1 && 'Identificação & Contato'}
-                {currentStep === 2 && 'Carreira & Senioridade'}
-                {currentStep === 3 && 'Documentação & Idiomas'}
-                {currentStep === 4 && 'Pretensão, CV & Momento Comercial'}
-              </span>
-            </div>
-            <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-blue-600 to-blue-400 transition-all duration-300"
-                style={{ width: `${(currentStep / 4) * 100}%` }}
-              />
-            </div>
-          </div>
+      {/* Progress Bar & Step Tabs */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between text-xs font-semibold text-slate-400 mb-2">
+          <span className="text-blue-400 font-bold">
+            {isEn ? `Step ${currentStep} of 4` : `Etapa ${currentStep} de 4`}
+          </span>
+          <span>
+            {currentStep === 1 && (isEn ? 'Identification & Contact' : 'Identificação & Contato')}
+            {currentStep === 2 && (isEn ? 'Career & Seniority' : 'Carreira & Senioridade')}
+            {currentStep === 3 && (isEn ? 'Documentation & Languages' : 'Documentação & Idiomas')}
+            {currentStep === 4 && (isEn ? 'Compensation, CV & Readiness' : 'Pretensão, CV & Momento Comercial')}
+          </span>
+        </div>
+        <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-blue-600 to-blue-400 transition-all duration-300"
+            style={{ width: `${(currentStep / 4) * 100}%` }}
+          />
+        </div>
+      </div>
 
-          {/* Error Message */}
-          {errorMessage && (
-            <div className="mb-6 p-4 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-xs sm:text-sm flex items-start gap-2.5 animate-fadeIn">
-              <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-              <span>{errorMessage}</span>
-            </div>
-          )}
+      {/* Error Message */}
+      {errorMessage && (
+        <div className="mb-6 p-4 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-xs sm:text-sm flex items-start gap-2.5 animate-fadeIn">
+          <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <span>{errorMessage}</span>
+        </div>
+      )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            
-            {/* STEP 1: Dados de Contato e Identificação */}
-            {currentStep === 1 && (
-              <div className="space-y-5 animate-fadeIn">
-                <div className="border-b border-slate-800 pb-3">
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <User className="w-5 h-5 text-blue-400" />
-                    <span>Dados de Contato & Identificação</span>
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    Informações para comunicação oficial e envio do diagnóstico.
-                  </p>
-                </div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        
+        {/* STEP 1: Dados de Contato e Identificação */}
+        {currentStep === 1 && (
+          <div className="space-y-5 animate-fadeIn">
+            <div className="border-b border-slate-800 pb-3">
+              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <User className="w-5 h-5 text-blue-400" />
+                <span>{isEn ? "Contact & Identification Data" : "Dados de Contato & Identificação"}</span>
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                {isEn ? "Information for official communication and assessment delivery." : "Informações para comunicação oficial e envio do diagnóstico."}
+              </p>
+            </div>
 
                 {/* 1. Nome completo */}
                 <div>
@@ -830,7 +838,9 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
                       className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 shrink-0"
                     />
                     <span className="text-xs text-slate-300 leading-relaxed">
-                      Autorizo o tratamento dos dados fornecidos neste formulário e no meu CV para análise do meu perfil profissional, contato comercial relacionado aos serviços da RL Headhunter e avaliação de aderência ao programa solicitado, nos termos da Política de Privacidade aplicável.
+                      {isEn 
+                        ? "I authorize the processing of my personal details and CV exclusively for evaluation of my profile and contact regarding RL Headhunter services under our Privacy Policy."
+                        : "Autorizo o tratamento dos dados fornecidos neste formulário e no meu CV para análise do meu perfil profissional, contato comercial relacionado aos serviços da RL Headhunter e avaliação de aderência ao programa solicitado, nos termos da Política de Privacidade aplicável."}
                     </span>
                   </label>
                 </div>
@@ -843,10 +853,10 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white text-xs font-bold transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white text-xs font-bold transition-all cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  <span>Voltar</span>
+                  <span>{isEn ? "Back" : "Voltar"}</span>
                 </button>
               ) : (
                 <div />
@@ -858,7 +868,7 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
                   onClick={nextStep}
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-xs font-bold transition-all shadow-md cursor-pointer"
                 >
-                  <span>Próxima Etapa</span>
+                  <span>{isEn ? "Next Step" : "Próxima Etapa"}</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               ) : (
@@ -868,10 +878,10 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
                   className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:bg-slate-700 text-white text-xs font-extrabold transition-all shadow-lg shadow-emerald-600/30 cursor-pointer"
                 >
                   {isSubmitting ? (
-                    <span>Processando Triagem...</span>
+                    <span>{isEn ? "Processing Screening..." : "Processando Triagem..."}</span>
                   ) : (
                     <>
-                      <span>ENVIAR PARA PRÉ-QUALIFICAÇÃO</span>
+                      <span>{isEn ? "SUBMIT FOR PRE-QUALIFICATION" : "ENVIAR PARA PRÉ-QUALIFICAÇÃO"}</span>
                       <CheckCircle className="w-4 h-4" />
                     </>
                   )}
