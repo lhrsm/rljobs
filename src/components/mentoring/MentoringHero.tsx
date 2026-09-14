@@ -57,14 +57,14 @@ export const MentoringHero: React.FC<MentoringHeroProps> = ({
                 <span>{t.mentoring.hero.primaryCta}</span>
               </button>
 
-              {/* Secondary CTA: Scrolls to Job Board */}
+              {/* Secondary CTA: Scrolls to Job Board (Outline Style) */}
               <button
                 type="button"
                 onClick={onViewJobs}
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg text-sm font-semibold text-slate-700 hover:text-slate-950 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg text-sm font-semibold text-slate-800 hover:text-blue-700 bg-transparent hover:bg-slate-50 border-2 border-slate-300 hover:border-slate-400 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <span>{t.mentoring.hero.secondaryCta}</span>
-                <ArrowDown className="w-3.5 h-3.5 text-slate-400" />
+                <ArrowDown className="w-3.5 h-3.5 text-slate-500" />
               </button>
             </div>
 

@@ -11,10 +11,10 @@ export const translations = {
     hero: {
       badge: "Executive Search & Tech Headhunting Global",
       roleTitle: "International Headhunter & Career Mentor",
-      name: "Ricardo Oliveira",
-      headline: "Contrate os Melhores Talentos Tech",
-      subheadline: "Hunting de precisão para posições seniores e C-Level com shortlist em 14 dias nos EUA, Europa e Brasil. Processos conduzidos com total discrição, compliance internacional e garantia de reposição.",
-      hireCta: "Contratar os Melhores Talentos Tech",
+      name: "Contrate os Melhores Talentos Tech",
+      headline: "Hunting de precisão para posições seniores e C-Level",
+      subheadline: "Shortlist em 14 dias nos EUA, Europa e Brasil. Processos conduzidos com total discrição, compliance internacional e garantia de reposição.",
+      hireCta: "SOLICITAR SHORTLIST EM 14 DIAS",
       metrics: {
         partners: "+500",
         partnersSub: "Empresas Parceiras",
@@ -304,10 +304,10 @@ export const translations = {
     hero: {
       badge: "Global Executive Search & Tech Headhunting",
       roleTitle: "International Headhunter & Career Mentor",
-      name: "Ricardo Oliveira",
-      headline: "Hire Top Tech Talent",
-      subheadline: "Precision executive search and headhunting for senior & C-Level tech roles with shortlist in 14 days across the US, Europe, and Brazil. Strict discretion, international compliance, and replacement guarantee.",
-      hireCta: "Hire Top Tech Talent",
+      name: "Hire Top Tech Talent",
+      headline: "Precision executive search for senior & C-Level roles",
+      subheadline: "14-day shortlist across the US, Europe, and Brazil. Strict discretion, international compliance, and replacement guarantee.",
+      hireCta: "REQUEST SHORTLIST IN 14 DAYS",
       metrics: {
         partners: "+500",
         partnersSub: "Partner Companies",

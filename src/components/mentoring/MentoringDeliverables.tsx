@@ -35,7 +35,7 @@ export const MentoringDeliverables: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 text-left">
+        <div className="max-w-3xl mb-12 text-left">
           <span className="text-xs font-bold uppercase tracking-widest text-blue-700 block mb-2">
             {t.mentoring.deliverables.badge}
           </span>
@@ -47,52 +47,101 @@ export const MentoringDeliverables: React.FC = () => {
           </p>
         </div>
 
-        {/* 3-Phase Editorial Framework */}
-        <div className="space-y-6 mb-12">
-          {phases.map((phase, idx) => (
-            <div
-              key={idx}
-              className="bg-slate-50/70 border border-slate-200/90 rounded-xl p-8 sm:p-10 text-left transition-colors hover:border-slate-300"
-            >
-              {/* Phase Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200/80 pb-4 mb-4 gap-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700 bg-blue-50 px-2.5 py-1 rounded border border-blue-200/70">
-                    {phase.phase}
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-slate-950 tracking-tight">
-                    {phase.title}
-                  </h3>
-                </div>
-
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  {idx === 0 && (isEn ? "Strategic Foundation" : "Fundação Estratégica")}
-                  {idx === 1 && (isEn ? "Market Engine" : "Motor de Mercado")}
-                  {idx === 2 && (isEn ? "Deal Closing" : "Fechamento de Oferta")}
-                </span>
+        {/* Stepper Overview Bar (Horizontal Timeline on Desktop) */}
+        <div className="hidden lg:grid grid-cols-3 gap-6 mb-14 border-b border-slate-200 pb-8 text-left">
+          {phases.map((p, idx) => (
+            <div key={idx} className="flex items-start gap-4">
+              <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 font-bold text-xs flex items-center justify-center shrink-0">
+                {p.stepNumber}
               </div>
-
-              {/* Phase Strategic Focus */}
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 max-w-4xl">
-                {phase.desc}
-              </p>
-
-              {/* Tangible Outcomes Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {phase.items.map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-white border border-slate-200/80 rounded-lg p-5 shadow-2xs flex flex-col justify-start"
-                  >
-                    <div className="w-6 h-0.5 bg-blue-600 mb-3" aria-hidden="true" />
-                    <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed">
-                      {item}
-                    </p>
-                  </div>
-                ))}
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700 block">
+                  {p.phase}
+                </span>
+                <span className="text-sm font-bold text-slate-900 block mt-0.5">
+                  {p.title}
+                </span>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Vertical Steps Progression with Connecting Line */}
+        <div className="relative mb-14 text-left">
+          {/* Vertical Connecting Spine Line */}
+          <div 
+            className="hidden md:block absolute top-8 bottom-8 left-6 w-0.5 bg-slate-200 -translate-x-1/2" 
+            aria-hidden="true" 
+          />
+
+          <div className="space-y-10">
+            {phases.map((phase, idx) => (
+              <div key={idx} className="relative flex flex-col md:flex-row items-start gap-6 lg:gap-8">
+                {/* Step Node Indicator */}
+                <div className="relative z-10 flex items-center justify-center w-12 h-12 rounded-xl bg-blue-700 text-white font-extrabold text-sm shrink-0 shadow-md">
+                  {phase.stepNumber}
+                </div>
+
+                {/* Step Content Card */}
+                <div className="flex-1 w-full bg-slate-50/80 border border-slate-200/90 rounded-xl p-6 sm:p-8 shadow-xs hover:border-slate-300 transition-colors">
+                  {/* Step Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-4 mb-4 gap-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded border border-blue-200">
+                        {phase.phase}
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-950 tracking-tight">
+                        {phase.title}
+                      </h3>
+                    </div>
+
+                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      {idx === 0 && (isEn ? "Step 1 • Strategic Alignment" : "Passo 1 • Alinhamento Estratégico")}
+                      {idx === 1 && (isEn ? "Step 2 • Active Pipeline" : "Passo 2 • Pipeline Ativo")}
+                      {idx === 2 && (isEn ? "Step 3 • Offer Closing" : "Passo 3 • Fechamento de Oferta")}
+                    </span>
+                  </div>
+
+                  {/* Step Focus / Objective */}
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+                    {phase.desc}
+                  </p>
+
+                  {/* Step Deliverables Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {phase.items.map((item, i) => (
+                      <div
+                        key={i}
+                        className="bg-white border border-slate-200/90 rounded-lg p-5 shadow-2xs flex flex-col justify-start"
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-700" />
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                            {isEn ? `Deliverable ${idx + 1}.${i + 1}` : `Entrega ${idx + 1}.${i + 1}`}
+                          </span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed">
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Step Milestone */}
+                  <div className="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500">
+                    <span className="font-semibold text-slate-700">
+                      {isEn ? "Step Milestone: " : "Marco da Fase: "}
+                    </span>
+                    <span className="text-slate-600 font-medium">
+                      {idx === 0 && (isEn ? "Positioning audit completed & International CV ready" : "Diagnóstico concluído e CV Internacional validado para ATS")}
+                      {idx === 1 && (isEn ? "Active market presence with direct hiring manager access" : "Visibilidade ativa e contatos com decisores internacionais")}
+                      {idx === 2 && (isEn ? "Executive interview mastery & hard currency contract closing" : "Domínio em entrevistas e assinatura de propostas em USD/EUR")}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Legal Disclaimer Box */}

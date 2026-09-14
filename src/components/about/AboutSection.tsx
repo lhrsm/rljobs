@@ -1,5 +1,4 @@
 import React from 'react';
-import { Linkedin, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface AboutSectionProps {
@@ -31,7 +30,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ variant = 'white' })
         </div>
 
         {/* Narrative & Authority Portrait Side-by-Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           {/* Portrait: Authority & Executive Presence */}
           <div className="lg:col-span-5 flex justify-center lg:justify-start">
@@ -63,38 +62,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ variant = 'white' })
             </p>
           </div>
 
-        </div>
-
-        {/* Closing Action Banner */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-md">
-          <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl font-medium">
-            {t.about.closing}
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            {/* LinkedIn CTA */}
-            <a
-              href="https://www.linkedin.com/in/ricardosoaresoliveira/?locale=en"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-[#0077B5] hover:bg-[#006097] text-white rounded-lg text-xs font-bold transition-colors shadow-xs"
-            >
-              <Linkedin className="w-4 h-4" />
-              <span>{t.about.contactDirect}</span>
-              <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
-            </a>
-
-            {/* WhatsApp CTA */}
-            <a
-              href="https://wa.me/351926527934"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-[#075E54] hover:bg-[#054c44] text-white rounded-lg text-xs font-bold transition-colors shadow-xs"
-            >
-              <span>{t.about.contactWhatsapp}</span>
-              <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
-            </a>
-          </div>
         </div>
 
       </div>
