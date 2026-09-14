@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Shield, Search } from 'lucide-react';
+import { ArrowDown, Shield } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface MentoringHeroProps {
@@ -61,7 +61,6 @@ export const MentoringHero: React.FC<MentoringHeroProps> = ({
                 onClick={onViewJobs}
                 className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-sm font-semibold text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-850 border border-slate-700 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400"
               >
-                <Search className="w-4 h-4 text-slate-400" />
                 <span>{t.mentoring.hero.secondaryCta}</span>
                 <ArrowDown className="w-3.5 h-3.5 text-slate-400" />
               </button>

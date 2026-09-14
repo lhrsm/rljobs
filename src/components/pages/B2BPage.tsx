@@ -12,11 +12,11 @@ export const B2BPage: React.FC = () => {
       {/* 1. Hero Principal com Apresentação Executiva para Empresas */}
       <HeroSection onOpenHireModal={() => setIsHireModalOpen(true)} />
 
-      {/* 2. Sobre Ricardo Oliveira & Framework 360° */}
-      <AboutSection />
+      {/* 2. Sobre Ricardo Oliveira & Framework 360° (Fundo Cinzento Suave / Slate-50) */}
+      <AboutSection variant="gray" />
 
-      {/* 3. Depoimentos Verificados & Empresas Parceiras */}
-      <TestimonialsSection />
+      {/* 3. Depoimentos Verificados & Empresas Parceiras (Fundo Branco com Cards Cinzentos) */}
+      <TestimonialsSection variant="white" />
 
       {/* Modal B2B: Contrate os Melhores Talentos Tech */}
       <HireTechTalentModal

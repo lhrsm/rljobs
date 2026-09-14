@@ -1,5 +1,5 @@
 import React from 'react';
-import { Briefcase, ArrowRight } from 'lucide-react';
+import { UserCheck } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface HeroSectionProps {
@@ -46,11 +46,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenHireModal }) => 
               <button
                 type="button"
                 onClick={onOpenHireModal}
-                className="inline-flex items-center justify-center gap-2.5 h-12 px-7 text-sm font-bold text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-800 rounded-xl shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2.5 h-12 px-7 text-sm font-bold text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-800 rounded-lg shadow-sm hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer group"
               >
-                <Briefcase className="w-4 h-4" />
+                <UserCheck className="w-4.5 h-4.5 text-blue-100 group-hover:text-white transition-colors" />
                 <span>{t.hero.hireCta}</span>
-                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
 

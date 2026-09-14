@@ -2,8 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
-export const TestimonialsSection: React.FC = () => {
+interface TestimonialsSectionProps {
+  variant?: 'white' | 'gray';
+}
+
+export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ variant = 'gray' }) => {
   const { t, language } = useLanguage();
+  const isWhite = variant === 'white';
 
   const testimonials = [
     {
@@ -154,7 +159,12 @@ export const TestimonialsSection: React.FC = () => {
   }, [isPaused, maxIndex]);
 
   return (
-    <section className="py-24 bg-slate-50 border-b border-slate-200/70 overflow-hidden" aria-labelledby="testimonials-heading">
+    <section
+      className={`py-24 border-b border-slate-200/70 overflow-hidden transition-colors ${
+        isWhite ? 'bg-white' : 'bg-slate-50'
+      }`}
+      aria-labelledby="testimonials-heading"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with Carousel Navigation Buttons */}
@@ -176,14 +186,22 @@ export const TestimonialsSection: React.FC = () => {
             <button
               onClick={prevSlide}
               aria-label="Depoimento anterior"
-              className="w-10 h-10 rounded-xl bg-white border border-slate-300 hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-900 flex items-center justify-center transition-all shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-600 ${
+                isWhite
+                  ? 'bg-slate-50 hover:bg-slate-100 border-slate-300 text-slate-700'
+                  : 'bg-white hover:bg-blue-50 border-slate-300 hover:border-blue-600 text-slate-700 hover:text-blue-900'
+              }`}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
               aria-label="Próximo depoimento"
-              className="w-10 h-10 rounded-xl bg-white border border-slate-300 hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-900 flex items-center justify-center transition-all shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-600 ${
+                isWhite
+                  ? 'bg-slate-50 hover:bg-slate-100 border-slate-300 text-slate-700'
+                  : 'bg-white hover:bg-blue-50 border-slate-300 hover:border-blue-600 text-slate-700 hover:text-blue-900'
+              }`}
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -210,7 +228,9 @@ export const TestimonialsSection: React.FC = () => {
                   width: `calc(${100 / itemsPerPage}% - ${(24 * (itemsPerPage - 1)) / itemsPerPage}px)`
                 }}
               >
-                <article className="h-full bg-white rounded-2xl p-7 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-blue-600/30 hover:shadow-md transition-all duration-300">
+                <article className={`h-full rounded-2xl p-7 border shadow-xs flex flex-col justify-between hover:border-blue-600/30 hover:shadow-md transition-all duration-300 ${
+                  isWhite ? 'bg-slate-50/80 hover:bg-white border-slate-200' : 'bg-white border-slate-200'
+                }`}>
                   <div>
                     {/* Top Row: Quote Icon + 5 Stars */}
                     <div className="flex items-center justify-between mb-4">
@@ -278,7 +298,9 @@ export const TestimonialsSection: React.FC = () => {
           {/* Carousel Viewport with Soft Gradient Edge Fade */}
           <div className="relative w-full overflow-hidden py-2">
             {/* Left Gradient Edge */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+            <div className={`pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 z-10 ${
+              isWhite ? 'bg-gradient-to-r from-white to-transparent' : 'bg-gradient-to-r from-slate-50 to-transparent'
+            }`} />
 
             {/* Continuous Slower Marquee Ticker */}
             <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused]">
@@ -286,9 +308,13 @@ export const TestimonialsSection: React.FC = () => {
               {officialBrands.map((brand, i) => (
                 <div
                   key={`brand-pure-t1-${i}`}
-                  className="group bg-white hover:bg-slate-50/80 rounded-xl px-5 py-3 border border-slate-200 shadow-2xs flex items-center gap-3.5 shrink-0 transition-all duration-300 cursor-default hover:border-slate-300 hover:shadow-xs"
+                  className={`group rounded-xl px-5 py-3 border border-slate-200 shadow-2xs flex items-center gap-3.5 shrink-0 transition-all duration-300 cursor-default hover:border-slate-300 hover:shadow-xs ${
+                    isWhite ? 'bg-slate-50 hover:bg-slate-100/80' : 'bg-white hover:bg-slate-50/80'
+                  }`}
                 >
-                  <div className="w-10 h-8 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 p-1.5 transition-colors group-hover:bg-white">
+                  <div className={`w-10 h-8 rounded-lg border border-slate-100 flex items-center justify-center shrink-0 p-1.5 transition-colors ${
+                    isWhite ? 'bg-white group-hover:bg-slate-50' : 'bg-slate-50 group-hover:bg-white'
+                  }`}>
                     <img
                       src={brand.logo}
                       alt={`${brand.name} logo oficial`}
@@ -306,10 +332,14 @@ export const TestimonialsSection: React.FC = () => {
               {officialBrands.map((brand, i) => (
                 <div
                   key={`brand-pure-t2-${i}`}
-                  className="group bg-white hover:bg-slate-50/80 rounded-xl px-5 py-3 border border-slate-200 shadow-2xs flex items-center gap-3.5 shrink-0 transition-all duration-300 cursor-default hover:border-slate-300 hover:shadow-xs"
+                  className={`group rounded-xl px-5 py-3 border border-slate-200 shadow-2xs flex items-center gap-3.5 shrink-0 transition-all duration-300 cursor-default hover:border-slate-300 hover:shadow-xs ${
+                    isWhite ? 'bg-slate-50 hover:bg-slate-100/80' : 'bg-white hover:bg-slate-50/80'
+                  }`}
                   aria-hidden="true"
                 >
-                  <div className="w-10 h-8 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 p-1.5 transition-colors group-hover:bg-white">
+                  <div className={`w-10 h-8 rounded-lg border border-slate-100 flex items-center justify-center shrink-0 p-1.5 transition-colors ${
+                    isWhite ? 'bg-white group-hover:bg-slate-50' : 'bg-slate-50 group-hover:bg-white'
+                  }`}>
                     <img
                       src={brand.logo}
                       alt={`${brand.name} logo oficial`}
@@ -325,7 +355,9 @@ export const TestimonialsSection: React.FC = () => {
             </div>
 
             {/* Right Gradient Edge */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-slate-50 to-transparent z-10" />
+            <div className={`pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 z-10 ${
+              isWhite ? 'bg-gradient-to-l from-white to-transparent' : 'bg-gradient-to-l from-slate-50 to-transparent'
+            }`} />
           </div>
         </div>
 

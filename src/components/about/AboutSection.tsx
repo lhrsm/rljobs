@@ -2,11 +2,22 @@ import React from 'react';
 import { Linkedin, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
-export const AboutSection: React.FC = () => {
+interface AboutSectionProps {
+  variant?: 'white' | 'gray';
+}
+
+export const AboutSection: React.FC<AboutSectionProps> = ({ variant = 'white' }) => {
   const { t } = useLanguage();
+  const isGray = variant === 'gray';
 
   return (
-    <section id="sobre" className="py-20 bg-white border-b border-slate-200" aria-labelledby="about-heading">
+    <section
+      id="sobre"
+      className={`py-20 border-b border-slate-200 transition-colors ${
+        isGray ? 'bg-slate-50' : 'bg-white'
+      }`}
+      aria-labelledby="about-heading"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -24,7 +35,9 @@ export const AboutSection: React.FC = () => {
           
           {/* Portrait: Authority & Executive Presence */}
           <div className="lg:col-span-5 flex justify-center lg:justify-start">
-            <div className="w-full max-w-md rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl bg-slate-100">
+            <div className={`w-full max-w-md rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl ${
+              isGray ? 'bg-white' : 'bg-slate-100'
+            }`}>
               <img
                 src="/img2.jpeg"
                 alt="Ricardo Oliveira - International Headhunter"
@@ -35,7 +48,9 @@ export const AboutSection: React.FC = () => {
 
           {/* Description Text */}
           <div className="lg:col-span-7 space-y-5 text-base sm:text-lg text-slate-700 leading-relaxed">
-            <div className="p-5 rounded-xl bg-slate-50 border-l-4 border-blue-600 border-y border-r border-slate-200 text-slate-900 font-medium italic text-base sm:text-lg leading-relaxed shadow-2xs">
+            <div className={`p-5 rounded-xl border-l-4 border-blue-600 border-y border-r border-slate-200 text-slate-900 font-medium italic text-base sm:text-lg leading-relaxed shadow-xs ${
+              isGray ? 'bg-white' : 'bg-slate-50'
+            }`}>
               "{t.about.p1}"
             </div>
             
