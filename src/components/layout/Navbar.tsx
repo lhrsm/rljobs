@@ -35,9 +35,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg p-1 text-left cursor-pointer"
             aria-label="Ricardo Oliveira - Início"
           >
-            <div className="w-9 h-9 bg-white rounded-xl p-1 flex items-center justify-center shadow-sm">
-              <img src="/RL Jobs.png" alt="RL Logo" className="w-7 h-7 object-contain" />
-            </div>
+            <img 
+              src="/RL Jobs.png" 
+              alt="RL Logo" 
+              className="w-8 h-8 object-contain transition-transform group-hover:scale-105" 
+            />
             <div className="flex flex-col text-left">
               <span className="text-base font-extrabold text-white tracking-tight leading-tight group-hover:text-blue-400 transition-colors">
                 Ricardo Oliveira
