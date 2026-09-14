@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Shield, CheckCircle } from 'lucide-react';
+import { ArrowDown, Shield } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface MentoringHeroProps {
@@ -75,40 +75,14 @@ export const MentoringHero: React.FC<MentoringHeroProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Hired International Professional Showcase */}
+          {/* Right Column: Clean Visual */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-md">
-              {/* Main Image */}
-              <div className="w-full rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-slate-100">
-                <img
-                  src="/hired-dev-male.jpg"
-                  alt={isEn ? "International Tech Professional Hired" : "Profissional Tech Contratado no Exterior"}
-                  className="w-full h-[420px] object-cover object-top block"
-                />
-              </div>
-
-              {/* Floating Badge / Card 1 - Outcome badge */}
-              <div className="absolute -bottom-5 -left-3 sm:-left-6 bg-white border border-slate-200 rounded-xl p-3.5 shadow-xl flex items-center gap-3 animate-fadeIn">
-                <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0">
-                  <CheckCircle className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-blue-700">
-                    {isEn ? "International Offer Accepted" : "Oferta Internacional Aceita"}
-                  </div>
-                  <div className="text-xs font-bold text-slate-900">
-                    {isEn ? "Senior Engineer • Europe Target" : "Senior Software Engineer • Mercado Europa"}
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Badge / Card 2 - Top Tag */}
-              <div className="absolute -top-3 -right-3 bg-white/95 backdrop-blur-xs border border-slate-200 rounded-lg px-3 py-1.5 shadow-md flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[11px] font-bold text-slate-800">
-                  {isEn ? "Global Placement" : "Contratação Global"}
-                </span>
-              </div>
+            <div className="w-full max-w-md rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-slate-100">
+              <img
+                src="/profissional.png"
+                alt={isEn ? "International Tech Professional" : "Profissional Tech Internacional"}
+                className="w-full h-[420px] object-cover object-top block"
+              />
             </div>
           </div>
 

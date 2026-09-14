@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserCheck, CheckCircle } from 'lucide-react';
+import { UserCheck } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface HeroSectionProps {
@@ -83,40 +83,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenHireModal }) => 
             </div>
           </div>
 
-          {/* Right Column: Hired Tech Talents Showcase */}
+          {/* Right Column: Clean Visual */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-md">
-              {/* Main Image */}
-              <div className="w-full rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-slate-100">
-                <img
-                  src="/hired-tech-team.jpg"
-                  alt={isEn ? "Tech talents hired and integrated in global teams" : "Talentos tech contratados e integrados em times globais"}
-                  className="w-full h-[420px] object-cover object-center block"
-                />
-              </div>
-
-              {/* Floating Badge / Card 1 - Success Metric */}
-              <div className="absolute -bottom-5 -left-3 sm:-left-6 bg-white border border-slate-200 rounded-xl p-3.5 shadow-xl flex items-center gap-3 animate-fadeIn">
-                <div className="w-10 h-10 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
-                  <CheckCircle className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
-                    {isEn ? "Shortlist Delivered" : "Shortlist Entregue"}
-                  </div>
-                  <div className="text-xs font-bold text-slate-900">
-                    {isEn ? "Senior Tech Hired in 14 Days" : "Tech Sênior Contratado em 14 Dias"}
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Badge / Card 2 - Top Tag */}
-              <div className="absolute -top-3 -right-3 bg-white/95 backdrop-blur-xs border border-slate-200 rounded-lg px-3 py-1.5 shadow-md flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[11px] font-bold text-slate-800">
-                  {isEn ? "Top 3% Pre-Vetted Talent" : "Top 3% Talentos Pré-Avaliados"}
-                </span>
-              </div>
+            <div className="w-full max-w-md rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-slate-100">
+              <img
+                src="/empresa.png"
+                alt={isEn ? "Tech talent recruitment and hiring" : "Recrutamento e contratação de talentos tech"}
+                className="w-full h-[420px] object-cover object-center block"
+              />
             </div>
           </div>
 
