@@ -10,7 +10,8 @@ import {
   CheckCircle, 
   AlertCircle, 
   ChevronRight, 
-  ChevronLeft
+  ChevronLeft,
+  Check
 } from 'lucide-react';
 import { 
   MentoringFormData, 
@@ -77,6 +78,13 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
     'Brasil',
     'EUA / Canadá',
     'Global Remote',
+  ];
+
+  const steps = [
+    { number: 1, title: isEn ? 'Identification' : 'Identificação' },
+    { number: 2, title: isEn ? 'Career' : 'Carreira' },
+    { number: 3, title: isEn ? 'Documents' : 'Documentação' },
+    { number: 4, title: isEn ? 'Finalization' : 'Finalização' },
   ];
 
   const handleTargetMarketToggle = (market: string) => {
@@ -207,47 +215,89 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
     formData.workRightTargetMarket === 'Em processo' || formData.migrationDocument === 'Em processo';
 
   const content = (
-    <div className={isInsideModal ? "text-left" : "bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl p-6 sm:p-10 text-left"}>
+    <div className={isInsideModal ? "text-left text-slate-900" : "bg-white rounded-2xl border border-slate-200 shadow-xl p-6 sm:p-10 text-left text-slate-900"}>
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-8">
-        <span className="text-xs font-bold uppercase tracking-widest text-blue-400 block mb-1">
+        <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">
           {isEn ? "Confidential Assessment" : "Avaliação Confidencial"}
         </span>
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
           {isEn ? "Pre-Qualification Form" : "Formulário de Pré-Qualificação"}
         </h2>
-        <p className="mt-1.5 text-xs sm:text-sm text-slate-300">
+        <p className="mt-1.5 text-xs sm:text-sm text-slate-600">
           {isEn 
             ? "Complete the details below so RL Headhunter leadership can assess the feasibility of your transition and alignment with your target international markets."
             : "Preencha os dados abaixo para que a liderança da RL Headhunter avalie a viabilidade da sua transição e a aderência aos mercados internacionais desejados."}
         </p>
       </div>
           
-      {/* Progress Bar & Step Tabs */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between text-xs font-semibold text-slate-400 mb-2">
-          <span className="text-blue-400 font-bold">
-            {isEn ? `Step ${currentStep} of 4` : `Etapa ${currentStep} de 4`}
-          </span>
-          <span>
-            {currentStep === 1 && (isEn ? 'Identification & Contact' : 'Identificação & Contato')}
-            {currentStep === 2 && (isEn ? 'Career & Seniority' : 'Carreira & Senioridade')}
-            {currentStep === 3 && (isEn ? 'Documentation & Languages' : 'Documentação & Idiomas')}
-            {currentStep === 4 && (isEn ? 'Compensation, CV & Readiness' : 'Pretensão, CV & Momento Comercial')}
-          </span>
+      {/* Stepper with Circles (Bolinhas cinzentas -> azul na etapa -> verde com check ao finalizar) */}
+      <div className="mb-8 max-w-xl mx-auto">
+        <div className="flex items-center justify-between relative">
+          {steps.map((step, index) => {
+            const isCompleted = currentStep > step.number;
+            const isCurrent = currentStep === step.number;
+
+            return (
+              <React.Fragment key={step.number}>
+                {/* Circle & Label */}
+                <div className="flex flex-col items-center relative z-10">
+                  <div
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all duration-300 ${
+                      isCompleted
+                        ? 'bg-emerald-600 text-white shadow-xs'
+                        : isCurrent
+                        ? 'bg-blue-600 text-white ring-4 ring-blue-100 shadow-xs'
+                        : 'bg-slate-100 border-2 border-slate-300 text-slate-400'
+                    }`}
+                  >
+                    {isCompleted ? (
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white stroke-[2.5]" />
+                    ) : (
+                      <span>{step.number}</span>
+                    )}
+                  </div>
+                  <span
+                    className={`mt-2 text-[11px] sm:text-xs tracking-tight transition-colors hidden sm:block whitespace-nowrap ${
+                      isCompleted
+                        ? 'text-emerald-700 font-semibold'
+                        : isCurrent
+                        ? 'text-blue-600 font-bold'
+                        : 'text-slate-400 font-medium'
+                    }`}
+                  >
+                    {step.title}
+                  </span>
+                </div>
+
+                {/* Connecting Line */}
+                {index < steps.length - 1 && (
+                  <div className="flex-1 mx-2 sm:mx-3 -mt-5 sm:-mt-6">
+                    <div
+                      className={`h-0.5 sm:h-1 w-full rounded-full transition-all duration-300 ${
+                        currentStep > step.number ? 'bg-emerald-600' : 'bg-slate-200'
+                      }`}
+                    />
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
         </div>
-        <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-blue-600 to-blue-400 transition-all duration-300"
-            style={{ width: `${(currentStep / 4) * 100}%` }}
-          />
+
+        {/* Mobile current step indicator */}
+        <div className="mt-3 text-center sm:hidden">
+          <span className="text-xs font-semibold text-slate-500">
+            {isEn ? `Step ${currentStep} of 4: ` : `Etapa ${currentStep} de 4: `}
+            <span className="text-blue-600 font-bold">{steps[currentStep - 1].title}</span>
+          </span>
         </div>
       </div>
 
       {/* Error Message */}
       {errorMessage && (
-        <div className="mb-6 p-4 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-xs sm:text-sm flex items-start gap-2.5 animate-fadeIn">
-          <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+        <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-start gap-2.5 animate-fadeIn">
+          <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
           <span>{errorMessage}</span>
         </div>
       )}
@@ -257,639 +307,659 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
         {/* STEP 1: Dados de Contato e Identificação */}
         {currentStep === 1 && (
           <div className="space-y-5 animate-fadeIn">
-            <div className="border-b border-slate-800 pb-3">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <User className="w-5 h-5 text-blue-400" />
+            <div className="border-b border-slate-200 pb-3">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <User className="w-5 h-5 text-blue-600" />
                 <span>{isEn ? "Contact & Identification Data" : "Dados de Contato & Identificação"}</span>
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 mt-0.5">
                 {isEn ? "Information for official communication and assessment delivery." : "Informações para comunicação oficial e envio do diagnóstico."}
               </p>
             </div>
 
-                {/* 1. Nome completo */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                    1. Nome Completo <span className="text-blue-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder="Ex: Carlos Eduardo Silva"
-                    className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* 2. E-mail */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                      <Mail className="w-3.5 h-3.5 text-blue-400" />
-                      <span>2. E-mail Profissional <span className="text-blue-400">*</span></span>
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="carlos@exemplo.com"
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-
-                  {/* 3. WhatsApp */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                      <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>3. WhatsApp com DDI <span className="text-blue-400">*</span></span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phoneWhatsApp}
-                      onChange={(e) => setFormData({ ...formData, phoneWhatsApp: e.target.value })}
-                      placeholder="+351 912 345 678 ou +55 11 99999-9999"
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* 4. LinkedIn */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                      <Linkedin className="w-3.5 h-3.5 text-blue-400" />
-                      <span>4. Link do seu LinkedIn <span className="text-blue-400">*</span></span>
-                    </label>
-                    <input
-                      type="url"
-                      required
-                      value={formData.linkedinUrl}
-                      onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
-                      placeholder="https://linkedin.com/in/seuperfil"
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-
-                  {/* 9. País de residência atual */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      9. País onde reside atualmente <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.currentCountry}
-                      onChange={(e) => setFormData({ ...formData, currentCountry: e.target.value })}
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Brasil">Brasil</option>
-                      <option value="Portugal">Portugal</option>
-                      <option value="Espanha">Espanha</option>
-                      <option value="Reino Unido">Reino Unido</option>
-                      <option value="Alemanha">Alemanha</option>
-                      <option value="França">França</option>
-                      <option value="Irlanda">Irlanda</option>
-                      <option value="Holanda">Holanda</option>
-                      <option value="Itália">Itália</option>
-                      <option value="Estados Unidos">Estados Unidos</option>
-                      <option value="Canadá">Canadá</option>
-                      <option value="Outro">Outro país</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* STEP 2: Carreira & Senioridade */}
-            {currentStep === 2 && (
-              <div className="space-y-5 animate-fadeIn">
-                <div className="border-b border-slate-800 pb-3">
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Briefcase className="w-5 h-5 text-blue-400" />
-                    <span>Carreira & Senioridade</span>
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    Avaliação do seu posicionamento técnico e maturidade profissional.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* 5. Cargo atual / último */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      5. Cargo Atual ou Último Cargo <span className="text-blue-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.currentRole}
-                      onChange={(e) => setFormData({ ...formData, currentRole: e.target.value })}
-                      placeholder="Ex: Senior Software Engineer, Head of Tech, Tech Lead..."
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-
-                  {/* 6. Área profissional */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      6. Área Profissional <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.professionalArea}
-                      onChange={(e) => setFormData({ ...formData, professionalArea: e.target.value })}
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Tecnologia / Engenharia de Software">Tecnologia / Engenharia de Software</option>
-                      <option value="Inteligência Artificial & Machine Learning">Inteligência Artificial & Machine Learning</option>
-                      <option value="Arquitetura de Soluções & Cloud (DevOps)">Arquitetura de Soluções & Cloud (DevOps)</option>
-                      <option value="Data Science, Analytics & Big Data">Data Science, Analytics & Big Data</option>
-                      <option value="Cybersecurity & Governança">Cybersecurity & Governança</option>
-                      <option value="Product Management & UX">Product Management & UX</option>
-                      <option value="Liderança Executiva (CTO / VP / Diretor)">Liderança Executiva (CTO / VP / Diretor)</option>
-                      <option value="Consultoria / FinTech / Gestão">Consultoria / FinTech / Gestão</option>
-                      <option value="Outra Área Estratégica">Outra Área Estratégica</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {/* 7. Anos de experiência */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      7. Anos de Experiência <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.yearsExperience}
-                      onChange={(e) => setFormData({ ...formData, yearsExperience: e.target.value as YearsExperience })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="0-2">0 a 2 anos (Inicial)</option>
-                      <option value="3-4">3 a 4 anos</option>
-                      <option value="5-7">5 a 7 anos</option>
-                      <option value="8-10">8 a 10 anos</option>
-                      <option value="10+">10+ anos (Sênior / Executivo)</option>
-                    </select>
-                  </div>
-
-                  {/* 8. Senioridade */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      8. Senioridade Atual <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.currentSeniority}
-                      onChange={(e) => setFormData({ ...formData, currentSeniority: e.target.value as CurrentSeniority })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Júnior">Júnior</option>
-                      <option value="Pleno">Pleno</option>
-                      <option value="Sênior">Sênior</option>
-                      <option value="Especialista">Especialista / Staff</option>
-                      <option value="Manager">Manager / Tech Lead</option>
-                      <option value="Director">Director / Head</option>
-                      <option value="Executive">Executive (VP / C-Level)</option>
-                    </select>
-                  </div>
-
-                  {/* 17. Situação profissional */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      17. Situação Atual <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.professionalStatus}
-                      onChange={(e) => setFormData({ ...formData, professionalStatus: e.target.value as ProfessionalStatus })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Empregado">Empregado(a)</option>
-                      <option value="Desempregado">Desempregado(a)</option>
-                      <option value="Freelancer">Freelancer / PJ</option>
-                      <option value="Em transição">Em transição de carreira</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* 22. Principal dificuldade */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                    22. Principal Dificuldade ou Gargalo na Recolocação Internacional <span className="text-blue-400">*</span>
-                  </label>
-                  <textarea
-                    rows={3}
-                    required
-                    value={formData.mainRelocationChallenge}
-                    onChange={(e) => setFormData({ ...formData, mainRelocationChallenge: e.target.value })}
-                    placeholder="Ex: Não consigo retornos nas aplicações para a Europa; sinto insegurança nas entrevistas em inglês; não sei como adaptar meu CV para os ATS europeus; tenho dificuldade de acessar decisores..."
-                    className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* STEP 3: Documentação, Idiomas & Mercados */}
-            {currentStep === 3 && (
-              <div className="space-y-5 animate-fadeIn">
-                <div className="border-b border-slate-800 pb-3">
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Globe className="w-5 h-5 text-blue-400" />
-                    <span>Mercados Desejados, Documentação & Idiomas</span>
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    Critérios determinantes para viabilidade imediata ou média prazo.
-                  </p>
-                </div>
-
-                {/* 10. Mercados Alvo */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-2">
-                    10. País ou Mercado onde deseja trabalhar (Selecione todos os de interesse) <span className="text-blue-400">*</span>
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                    {availableMarkets.map((market) => {
-                      const isSelected = formData.targetMarkets.includes(market);
-                      return (
-                        <button
-                          key={market}
-                          type="button"
-                          onClick={() => handleTargetMarketToggle(market)}
-                          className={`p-2.5 rounded-lg text-xs font-semibold border transition-all text-center flex items-center justify-between ${
-                            isSelected
-                              ? 'bg-blue-600/30 border-blue-500 text-white shadow-xs'
-                              : 'bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-600'
-                          }`}
-                        >
-                          <span>{market}</span>
-                          {isSelected && <CheckCircle className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* 11-13. Cidadania e Visto */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {/* 11. Cidadania */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      11. Cidadania <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.citizenshipStatus}
-                      onChange={(e) => setFormData({ ...formData, citizenshipStatus: e.target.value as CitizenshipStatus })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Brasileira">Brasileira</option>
-                      <option value="Europeia">Europeia (Passaporte UE)</option>
-                      <option value="Dupla">Dupla Cidadania</option>
-                      <option value="Outra">Outra Nacionalidade</option>
-                    </select>
-                  </div>
-
-                  {/* 12. Direito de trabalho */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      12. Direito de Trabalho <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.workRightTargetMarket}
-                      onChange={(e) => setFormData({ ...formData, workRightTargetMarket: e.target.value as WorkRightStatus })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Sim">Sim, possuo</option>
-                      <option value="Em processo">Em processo / Em andamento</option>
-                      <option value="Não">Não possuo</option>
-                    </select>
-                  </div>
-
-                  {/* 13. Documento migratório */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      13. Documento Migratório <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.migrationDocument}
-                      onChange={(e) => setFormData({ ...formData, migrationDocument: e.target.value as MigrationDocument })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Cidadania">Cidadania Europeia</option>
-                      <option value="Visto">Visto de Trabalho Válido</option>
-                      <option value="Residência">Título de Residência</option>
-                      <option value="Work Permit">Work Permit Homologado</option>
-                      <option value="Em processo">Processo em Andamento</option>
-                      <option value="Não possuo">Não possuo documento</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* 14. Se em processo: Previsão (Condicional) */}
-                {isProcessConditionalActive && (
-                  <div className="p-4 rounded-xl bg-blue-950/40 border border-blue-500/40 animate-fadeIn">
-                    <label className="block text-xs font-bold text-blue-300 uppercase tracking-wider mb-1.5">
-                      14. Previsão Estimada de Conclusão da Documentação <span className="text-blue-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required={isProcessConditionalActive}
-                      value={formData.migrationProcessEta || ''}
-                      onChange={(e) => setFormData({ ...formData, migrationProcessEta: e.target.value })}
-                      placeholder="Ex: Outubro/2026, Em 3 meses, Fase final no consulado..."
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none"
-                    />
-                  </div>
-                )}
-
-                {/* 15-16. Idiomas */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      15. Nível de Inglês (CEFR) <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.englishLevel}
-                      onChange={(e) => setFormData({ ...formData, englishLevel: e.target.value as EnglishLevel })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="B2">B2 — Intermediário Superior / Profissional Independente</option>
-                      <option value="C1">C1 — Avançado / Fluente para Negócios</option>
-                      <option value="C2">C2 — Domínio Pleno / Nativo</option>
-                      <option value="B1">B1 — Intermediário Básico</option>
-                      <option value="A2">A2 — Básico</option>
-                      <option value="A1">A1 — Iniciante</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      16. Outros Idiomas (Opcional)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.otherLanguages || ''}
-                      onChange={(e) => setFormData({ ...formData, otherLanguages: e.target.value })}
-                      placeholder="Ex: Espanhol C1, Francês B1, Alemão A2..."
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-                </div>
-
-                {/* 20-21. Modalidade e Mudança */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      20. Modalidade Desejada <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.workModel}
-                      onChange={(e) => setFormData({ ...formData, workModel: e.target.value as WorkModelDesired })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Remote">100% Remoto (Global Remote / Home Office)</option>
-                      <option value="Hybrid">Híbrido (No país de destino)</option>
-                      <option value="Relocation">Relocation (Presencial com pacote de mudança)</option>
-                      <option value="On-site">On-site (Presencial)</option>
-                      <option value="Indiferente">Indiferente / Aberto a propostas</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      21. Disponibilidade para Mudança <span className="text-blue-400">*</span>
-                    </label>
-                    <select
-                      value={formData.relocationAvailability}
-                      onChange={(e) => setFormData({ ...formData, relocationAvailability: e.target.value as RelocationAvailability })}
-                      className="w-full h-11 px-3 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    >
-                      <option value="Imediata">Imediata</option>
-                      <option value="30 dias">Até 30 dias</option>
-                      <option value="60 dias">Até 60 dias</option>
-                      <option value="90+ dias">90+ dias</option>
-                      <option value="Não">Não pretendo me mudar (Apenas Remoto)</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* STEP 4: Expectativa Salarial, CV & Momento Comercial */}
-            {currentStep === 4 && (
-              <div className="space-y-6 animate-fadeIn">
-                <div className="border-b border-slate-800 pb-3">
-                  <h3 className="text-lg font-bold text-white">
-                    Pretensão Salarial, CV & Momento Comercial
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    Última etapa para cálculo de viabilidade e triagem executiva.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* 18. Remuneração atual */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      18. Remuneração Atual (Opcional)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.currentSalary || ''}
-                      onChange={(e) => setFormData({ ...formData, currentSalary: e.target.value })}
-                      placeholder="Ex: R$ 22.000 / mês ou € 3.200 / mês"
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-
-                  {/* 19. Remuneração pretendida */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                      19. Remuneração Pretendida <span className="text-blue-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.targetSalary}
-                      onChange={(e) => setFormData({ ...formData, targetSalary: e.target.value })}
-                      placeholder="Ex: € 4.500 / mês ou $ 80.000 / ano"
-                      className="w-full h-11 px-4 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-                </div>
-
-                {/* 23. Upload do CV */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">
-                    23. Upload do Currículo (PDF ou DOCX) <span className="text-blue-400">*</span>
-                  </label>
-                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-700 border-dashed rounded-xl bg-slate-800/60 hover:bg-slate-800 transition-colors">
-                    <div className="space-y-2 text-center">
-                      <UploadCloud className="mx-auto h-9 w-9 text-blue-400" />
-                      <div className="flex text-xs text-slate-300 justify-center">
-                        <label className="relative cursor-pointer rounded-md font-bold text-blue-400 hover:text-blue-300 focus-within:outline-none">
-                          <span>Clique para selecionar o arquivo</span>
-                          <input
-                            type="file"
-                            accept=".pdf,.docx,.doc"
-                            className="sr-only"
-                            onChange={handleFileChange}
-                          />
-                        </label>
-                      </div>
-                      <p className="text-[11px] text-slate-500">
-                        {formData.cvFileName
-                          ? `Arquivo selecionado: ${formData.cvFileName}`
-                          : 'Formatos aceitos: PDF ou DOCX (Tamanho máx: 10MB)'}
-                      </p>
-                      {formData.cvFileName && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-medium">
-                          <CheckCircle className="w-3.5 h-3.5" />
-                          <span>CV anexado com sucesso</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* 24. Pergunta Comercial Obrigatória */}
-                <div className="p-5 rounded-2xl bg-gradient-to-b from-blue-950/60 to-slate-800/80 border-2 border-blue-500/40">
-                  <label className="block text-xs sm:text-sm font-bold text-white mb-2 leading-snug">
-                    24. O International Job Hunting & Career Mentoring é um serviço profissional remunerado. Caso seu perfil seja elegível, qual opção melhor representa seu momento atual? <span className="text-blue-400">*</span>
-                  </label>
-                  
-                  <div className="space-y-2.5 mt-3">
-                    <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
-                      formData.commercialReadiness === 'ready_to_invest'
-                        ? 'bg-blue-600/20 border-blue-500 text-white'
-                        : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-600'
-                    }`}>
-                      <input
-                        type="radio"
-                        name="commercialReadiness"
-                        value="ready_to_invest"
-                        checked={formData.commercialReadiness === 'ready_to_invest'}
-                        onChange={() => setFormData({ ...formData, commercialReadiness: 'ready_to_invest' })}
-                        className="mt-1 text-blue-600 focus:ring-blue-500"
-                      />
-                      <div>
-                        <strong className="text-xs sm:text-sm text-white block">
-                          Estou preparado(a) para investir no programa.
-                        </strong>
-                        <span className="text-[11px] text-slate-400">
-                          Priorizo acompanhamento individual e quero acelerar minha contratação internacional.
-                        </span>
-                      </div>
-                    </label>
-
-                    <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
-                      formData.commercialReadiness === 'want_conditions_first'
-                        ? 'bg-blue-600/20 border-blue-500 text-white'
-                        : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-600'
-                    }`}>
-                      <input
-                        type="radio"
-                        name="commercialReadiness"
-                        value="want_conditions_first"
-                        checked={formData.commercialReadiness === 'want_conditions_first'}
-                        onChange={() => setFormData({ ...formData, commercialReadiness: 'want_conditions_first' })}
-                        className="mt-1 text-blue-600 focus:ring-blue-500"
-                      />
-                      <div>
-                        <strong className="text-xs sm:text-sm text-white block">
-                          Quero conhecer o investimento e as condições antes de decidir.
-                        </strong>
-                        <span className="text-[11px] text-slate-400">
-                          Gostaria de entender a proposta comercial e o cronograma na avaliação prévia.
-                        </span>
-                      </div>
-                    </label>
-
-                    <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
-                      formData.commercialReadiness === 'no_financial_availability'
-                        ? 'bg-blue-600/20 border-blue-500 text-white'
-                        : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-600'
-                    }`}>
-                      <input
-                        type="radio"
-                        name="commercialReadiness"
-                        value="no_financial_availability"
-                        checked={formData.commercialReadiness === 'no_financial_availability'}
-                        onChange={() => setFormData({ ...formData, commercialReadiness: 'no_financial_availability' })}
-                        className="mt-1 text-blue-600 focus:ring-blue-500"
-                      />
-                      <div>
-                        <strong className="text-xs sm:text-sm text-white block">
-                          Não tenho disponibilidade financeira neste momento.
-                        </strong>
-                        <span className="text-[11px] text-slate-400">
-                          Prefiro acompanhar apenas as vagas públicas e conteúdos gratuitos.
-                        </span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Consentimento LGPD / GDPR */}
-                <div className="pt-2">
-                  <label className="flex items-start gap-3 p-4 rounded-xl bg-slate-950/80 border border-slate-800 cursor-pointer text-left">
-                    <input
-                      type="checkbox"
-                      required
-                      checked={formData.privacyConsent}
-                      onChange={(e) => setFormData({ ...formData, privacyConsent: e.target.checked })}
-                      className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 shrink-0"
-                    />
-                    <span className="text-xs text-slate-300 leading-relaxed">
-                      {isEn 
-                        ? "I authorize the processing of my personal details and CV exclusively for evaluation of my profile and contact regarding RL Headhunter services under our Privacy Policy."
-                        : "Autorizo o tratamento dos dados fornecidos neste formulário e no meu CV para análise do meu perfil profissional, contato comercial relacionado aos serviços da RL Headhunter e avaliação de aderência ao programa solicitado, nos termos da Política de Privacidade aplicável."}
-                    </span>
-                  </label>
-                </div>
-              </div>
-            )}
-
-            {/* Navigation Controls */}
-            <div className="pt-6 border-t border-slate-800 flex items-center justify-between gap-4">
-              {currentStep > 1 ? (
-                <button
-                  type="button"
-                  onClick={prevStep}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white text-xs font-bold transition-all cursor-pointer"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>{isEn ? "Back" : "Voltar"}</span>
-                </button>
-              ) : (
-                <div />
-              )}
-
-              {currentStep < 4 ? (
-                <button
-                  type="button"
-                  onClick={nextStep}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-xs font-bold transition-all shadow-md cursor-pointer"
-                >
-                  <span>{isEn ? "Next Step" : "Próxima Etapa"}</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:bg-slate-700 text-white text-xs font-extrabold transition-all shadow-lg shadow-emerald-600/30 cursor-pointer"
-                >
-                  {isSubmitting ? (
-                    <span>{isEn ? "Processing Screening..." : "Processando Triagem..."}</span>
-                  ) : (
-                    <>
-                      <span>{isEn ? "SUBMIT FOR PRE-QUALIFICATION" : "ENVIAR PARA PRÉ-QUALIFICAÇÃO"}</span>
-                      <CheckCircle className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-              )}
+            {/* 1. Nome completo */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                {isEn ? "1. Full Name" : "1. Nome Completo"} <span className="text-blue-600">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                placeholder={isEn ? "e.g. John Doe" : "Ex: Carlos Eduardo Silva"}
+                className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+              />
             </div>
 
-          </form>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 2. E-mail */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-blue-600" />
+                  <span>{isEn ? "2. Work or Personal Email" : "2. E-mail Profissional"} <span className="text-blue-600">*</span></span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder={isEn ? "john@example.com" : "carlos@exemplo.com"}
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                />
+              </div>
+
+              {/* 3. WhatsApp */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>{isEn ? "3. WhatsApp with Country Code" : "3. WhatsApp com DDI"} <span className="text-blue-600">*</span></span>
+                </label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.phoneWhatsApp}
+                  onChange={(e) => setFormData({ ...formData, phoneWhatsApp: e.target.value })}
+                  placeholder={isEn ? "+1 555 123 4567 or +351 912 345 678" : "+351 912 345 678 ou +55 11 99999-9999"}
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 4. LinkedIn */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <Linkedin className="w-3.5 h-3.5 text-blue-600" />
+                  <span>{isEn ? "4. LinkedIn Profile URL" : "4. Link do seu LinkedIn"} <span className="text-blue-600">*</span></span>
+                </label>
+                <input
+                  type="url"
+                  required
+                  value={formData.linkedinUrl}
+                  onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
+                  placeholder="https://linkedin.com/in/seuperfil"
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                />
+              </div>
+
+              {/* 9. País de residência atual */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "9. Current Country of Residence" : "9. País onde reside atualmente"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.currentCountry}
+                  onChange={(e) => setFormData({ ...formData, currentCountry: e.target.value })}
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Brasil">{isEn ? "Brazil" : "Brasil"}</option>
+                  <option value="Portugal">Portugal</option>
+                  <option value="Espanha">{isEn ? "Spain" : "Espanha"}</option>
+                  <option value="Reino Unido">{isEn ? "United Kingdom" : "Reino Unido"}</option>
+                  <option value="Alemanha">{isEn ? "Germany" : "Alemanha"}</option>
+                  <option value="França">{isEn ? "France" : "França"}</option>
+                  <option value="Irlanda">{isEn ? "Ireland" : "Irlanda"}</option>
+                  <option value="Holanda">{isEn ? "Netherlands" : "Holanda"}</option>
+                  <option value="Itália">{isEn ? "Italy" : "Itália"}</option>
+                  <option value="Estados Unidos">{isEn ? "United States" : "Estados Unidos"}</option>
+                  <option value="Canadá">{isEn ? "Canada" : "Canadá"}</option>
+                  <option value="Outro">{isEn ? "Other country" : "Outro país"}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 2: Carreira & Senioridade */}
+        {currentStep === 2 && (
+          <div className="space-y-5 animate-fadeIn">
+            <div className="border-b border-slate-200 pb-3">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-blue-600" />
+                <span>{isEn ? "Career & Seniority" : "Carreira & Senioridade"}</span>
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {isEn 
+                  ? "Assessment of your technical positioning and professional maturity."
+                  : "Avaliação do seu posicionamento técnico e maturidade profissional."}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 5. Cargo atual / último */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "5. Current or Most Recent Role" : "5. Cargo Atual ou Último Cargo"} <span className="text-blue-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.currentRole}
+                  onChange={(e) => setFormData({ ...formData, currentRole: e.target.value })}
+                  placeholder={isEn ? "e.g. Senior Software Engineer, Head of Tech, Tech Lead..." : "Ex: Senior Software Engineer, Head of Tech, Tech Lead..."}
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                />
+              </div>
+
+              {/* 6. Área profissional */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "6. Professional Area" : "6. Área Profissional"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.professionalArea}
+                  onChange={(e) => setFormData({ ...formData, professionalArea: e.target.value })}
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Tecnologia / Engenharia de Software">{isEn ? "Technology / Software Engineering" : "Tecnologia / Engenharia de Software"}</option>
+                  <option value="Inteligência Artificial & Machine Learning">{isEn ? "AI & Machine Learning" : "Inteligência Artificial & Machine Learning"}</option>
+                  <option value="Arquitetura de Soluções & Cloud (DevOps)">{isEn ? "Solutions Architecture & Cloud (DevOps)" : "Arquitetura de Soluções & Cloud (DevOps)"}</option>
+                  <option value="Data Science, Analytics & Big Data">{isEn ? "Data Science, Analytics & Big Data" : "Data Science, Analytics & Big Data"}</option>
+                  <option value="Cybersecurity & Governança">{isEn ? "Cybersecurity & Governance" : "Cybersecurity & Governança"}</option>
+                  <option value="Product Management & UX">{isEn ? "Product Management & UX" : "Product Management & UX"}</option>
+                  <option value="Liderança Executiva (CTO / VP / Diretor)">{isEn ? "Executive Leadership (CTO / VP / Director)" : "Liderança Executiva (CTO / VP / Diretor)"}</option>
+                  <option value="Consultoria / FinTech / Gestão">{isEn ? "Consulting / FinTech / Management" : "Consultoria / FinTech / Gestão"}</option>
+                  <option value="Outra Área Estratégica">{isEn ? "Other Strategic Area" : "Outra Área Estratégica"}</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* 7. Anos de experiência */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "7. Years of Experience" : "7. Anos de Experiência"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.yearsExperience}
+                  onChange={(e) => setFormData({ ...formData, yearsExperience: e.target.value as YearsExperience })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="0-2">{isEn ? "0 to 2 years" : "0 a 2 anos (Inicial)"}</option>
+                  <option value="3-4">{isEn ? "3 to 4 years" : "3 a 4 anos"}</option>
+                  <option value="5-7">{isEn ? "5 to 7 years" : "5 a 7 anos"}</option>
+                  <option value="8-10">{isEn ? "8 to 10 years" : "8 a 10 anos"}</option>
+                  <option value="10+">{isEn ? "10+ years (Senior / Exec)" : "10+ anos (Sênior / Executivo)"}</option>
+                </select>
+              </div>
+
+              {/* 8. Senioridade */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "8. Current Seniority" : "8. Senioridade Atual"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.currentSeniority}
+                  onChange={(e) => setFormData({ ...formData, currentSeniority: e.target.value as CurrentSeniority })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Júnior">{isEn ? "Junior" : "Júnior"}</option>
+                  <option value="Pleno">{isEn ? "Mid-Level" : "Pleno"}</option>
+                  <option value="Sênior">{isEn ? "Senior" : "Sênior"}</option>
+                  <option value="Especialista">{isEn ? "Specialist / Staff" : "Especialista / Staff"}</option>
+                  <option value="Manager">{isEn ? "Manager / Tech Lead" : "Manager / Tech Lead"}</option>
+                  <option value="Director">{isEn ? "Director / Head" : "Director / Head"}</option>
+                  <option value="Executive">{isEn ? "Executive (VP / C-Level)" : "Executive (VP / C-Level)"}</option>
+                </select>
+              </div>
+
+              {/* 17. Situação profissional */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "17. Current Status" : "17. Situação Atual"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.professionalStatus}
+                  onChange={(e) => setFormData({ ...formData, professionalStatus: e.target.value as ProfessionalStatus })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Empregado">{isEn ? "Employed" : "Empregado(a)"}</option>
+                  <option value="Desempregado">{isEn ? "Unemployed" : "Desempregado(a)"}</option>
+                  <option value="Freelancer">{isEn ? "Contractor / Freelancer" : "Freelancer / PJ"}</option>
+                  <option value="Em transição">{isEn ? "In Career Transition" : "Em transição de carreira"}</option>
+                </select>
+              </div>
+            </div>
+
+            {/* 22. Principal dificuldade */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                {isEn 
+                  ? "22. Primary Challenge or Bottleneck in International Job Hunting" 
+                  : "22. Principal Dificuldade ou Gargalo na Recolocação Internacional"} <span className="text-blue-600">*</span>
+              </label>
+              <textarea
+                rows={3}
+                required
+                value={formData.mainRelocationChallenge}
+                onChange={(e) => setFormData({ ...formData, mainRelocationChallenge: e.target.value })}
+                placeholder={isEn 
+                  ? "e.g. Not getting responses from European applications; feeling insecure in technical interviews in English; unsure how to optimize CV for ATS..."
+                  : "Ex: Não consigo retornos nas aplicações para a Europa; sinto insegurança nas entrevistas em inglês; não sei como adaptar meu CV para os ATS europeus; tenho dificuldade de acessar decisores..."}
+                className="w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none resize-none transition-colors"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* STEP 3: Documentação, Idiomas & Mercados */}
+        {currentStep === 3 && (
+          <div className="space-y-5 animate-fadeIn">
+            <div className="border-b border-slate-200 pb-3">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <Globe className="w-5 h-5 text-blue-600" />
+                <span>{isEn ? "Target Markets, Documentation & Languages" : "Mercados Desejados, Documentação & Idiomas"}</span>
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {isEn 
+                  ? "Key criteria determining immediate or medium-term relocation feasibility."
+                  : "Critérios determinantes para viabilidade imediata ou média prazo."}
+              </p>
+            </div>
+
+            {/* 10. Mercados Alvo */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                {isEn 
+                  ? "10. Target Country or Market (Select all that apply)" 
+                  : "10. País ou Mercado onde deseja trabalhar (Selecione todos os de interesse)"} <span className="text-blue-600">*</span>
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                {availableMarkets.map((market) => {
+                  const isSelected = formData.targetMarkets.includes(market);
+                  return (
+                    <button
+                      key={market}
+                      type="button"
+                      onClick={() => handleTargetMarketToggle(market)}
+                      className={`p-2.5 rounded-lg text-xs font-semibold border transition-all text-center flex items-center justify-between cursor-pointer ${
+                        isSelected
+                          ? 'bg-blue-50 border-blue-600 text-blue-700 shadow-xs'
+                          : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+                      }`}
+                    >
+                      <span>{market}</span>
+                      {isSelected && <CheckCircle className="w-3.5 h-3.5 text-blue-600 shrink-0" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 11-13. Cidadania e Visto */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* 11. Cidadania */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "11. Citizenship" : "11. Cidadania"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.citizenshipStatus}
+                  onChange={(e) => setFormData({ ...formData, citizenshipStatus: e.target.value as CitizenshipStatus })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Brasileira">{isEn ? "Brazilian" : "Brasileira"}</option>
+                  <option value="Europeia">{isEn ? "European (EU Passport)" : "Europeia (Passaporte UE)"}</option>
+                  <option value="Dupla">{isEn ? "Dual Citizenship" : "Dupla Cidadania"}</option>
+                  <option value="Outra">{isEn ? "Other" : "Outra Nacionalidade"}</option>
+                </select>
+              </div>
+
+              {/* 12. Direito de trabalho */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "12. Work Authorization" : "12. Direito de Trabalho"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.workRightTargetMarket}
+                  onChange={(e) => setFormData({ ...formData, workRightTargetMarket: e.target.value as WorkRightStatus })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Sim">{isEn ? "Yes, authorized" : "Sim, possuo"}</option>
+                  <option value="Em processo">{isEn ? "In process / pending" : "Em processo / Em andamento"}</option>
+                  <option value="Não">{isEn ? "No authorization" : "Não possuo"}</option>
+                </select>
+              </div>
+
+              {/* 13. Documento migratório */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "13. Migration Document" : "13. Documento Migratório"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.migrationDocument}
+                  onChange={(e) => setFormData({ ...formData, migrationDocument: e.target.value as MigrationDocument })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Cidadania">{isEn ? "European Citizenship" : "Cidadania Europeia"}</option>
+                  <option value="Visto">{isEn ? "Valid Work Visa" : "Visto de Trabalho Válido"}</option>
+                  <option value="Residência">{isEn ? "Residence Permit" : "Título de Residência"}</option>
+                  <option value="Work Permit">{isEn ? "Approved Work Permit" : "Work Permit Homologado"}</option>
+                  <option value="Em processo">{isEn ? "Application in Progress" : "Processo em Andamento"}</option>
+                  <option value="Não possuo">{isEn ? "No Document" : "Não possuo documento"}</option>
+                </select>
+              </div>
+            </div>
+
+            {/* 14. Se em processo: Previsão (Condicional) */}
+            {isProcessConditionalActive && (
+              <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-200 animate-fadeIn">
+                <label className="block text-xs font-bold text-blue-900 uppercase tracking-wider mb-1.5">
+                  {isEn ? "14. Estimated Documentation Completion Date" : "14. Previsão Estimada de Conclusão da Documentação"} <span className="text-blue-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  required={isProcessConditionalActive}
+                  value={formData.migrationProcessEta || ''}
+                  onChange={(e) => setFormData({ ...formData, migrationProcessEta: e.target.value })}
+                  placeholder={isEn ? "e.g. October/2026, In 3 months, Final consulate stage..." : "Ex: Outubro/2026, Em 3 meses, Fase final no consulado..."}
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-blue-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none"
+                />
+              </div>
+            )}
+
+            {/* 15-16. Idiomas */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "15. English Level (CEFR)" : "15. Nível de Inglês (CEFR)"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.englishLevel}
+                  onChange={(e) => setFormData({ ...formData, englishLevel: e.target.value as EnglishLevel })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="B2">B2 — {isEn ? "Upper Intermediate / Independent Professional" : "Intermediário Superior / Profissional Independente"}</option>
+                  <option value="C1">C1 — {isEn ? "Advanced / Fluent for Business" : "Avançado / Fluente para Negócios"}</option>
+                  <option value="C2">C2 — {isEn ? "Proficient / Native-like" : "Domínio Pleno / Nativo"}</option>
+                  <option value="B1">B1 — {isEn ? "Intermediate" : "Intermediário Básico"}</option>
+                  <option value="A2">A2 — {isEn ? "Elementary" : "Básico"}</option>
+                  <option value="A1">A1 — {isEn ? "Beginner" : "Iniciante"}</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "16. Other Languages (Optional)" : "16. Outros Idiomas (Opcional)"}
+                </label>
+                <input
+                  type="text"
+                  value={formData.otherLanguages || ''}
+                  onChange={(e) => setFormData({ ...formData, otherLanguages: e.target.value })}
+                  placeholder={isEn ? "e.g. Spanish C1, French B1, German A2..." : "Ex: Espanhol C1, Francês B1, Alemão A2..."}
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* 20-21. Modalidade e Mudança */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "20. Desired Work Model" : "20. Modalidade Desejada"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.workModel}
+                  onChange={(e) => setFormData({ ...formData, workModel: e.target.value as WorkModelDesired })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Remote">{isEn ? "100% Remote (Global Remote / Home Office)" : "100% Remoto (Global Remote / Home Office)"}</option>
+                  <option value="Hybrid">{isEn ? "Hybrid (In destination country)" : "Híbrido (No país de destino)"}</option>
+                  <option value="Relocation">{isEn ? "Relocation (On-site with relocation package)" : "Relocation (Presencial com pacote de mudança)"}</option>
+                  <option value="On-site">{isEn ? "On-site" : "On-site (Presencial)"}</option>
+                  <option value="Indiferente">{isEn ? "Open to opportunities" : "Indiferente / Aberto a propostas"}</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "21. Relocation Availability" : "21. Disponibilidade para Mudança"} <span className="text-blue-600">*</span>
+                </label>
+                <select
+                  value={formData.relocationAvailability}
+                  onChange={(e) => setFormData({ ...formData, relocationAvailability: e.target.value as RelocationAvailability })}
+                  className="w-full h-11 px-3 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                >
+                  <option value="Imediata">{isEn ? "Immediate" : "Imediata"}</option>
+                  <option value="30 dias">{isEn ? "Within 30 days" : "Até 30 dias"}</option>
+                  <option value="60 dias">{isEn ? "Within 60 days" : "Até 60 dias"}</option>
+                  <option value="90+ dias">{isEn ? "90+ days" : "90+ dias"}</option>
+                  <option value="Não">{isEn ? "Not planning to relocate (Remote only)" : "Não pretendo me mudar (Apenas Remoto)"}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 4: Expectativa Salarial, CV & Momento Comercial */}
+        {currentStep === 4 && (
+          <div className="space-y-6 animate-fadeIn">
+            <div className="border-b border-slate-200 pb-3">
+              <h3 className="text-lg font-bold text-slate-900">
+                {isEn ? "Target Compensation, CV & Commercial Readiness" : "Pretensão Salarial, CV & Momento Comercial"}
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {isEn 
+                  ? "Final stage for feasibility calculation and executive screening."
+                  : "Última etapa para cálculo de viabilidade e triagem executiva."}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 18. Remuneração atual */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "18. Current Compensation (Optional)" : "18. Remuneração Atual (Opcional)"}
+                </label>
+                <input
+                  type="text"
+                  value={formData.currentSalary || ''}
+                  onChange={(e) => setFormData({ ...formData, currentSalary: e.target.value })}
+                  placeholder="Ex: R$ 22.000 / mês ou € 3.200 / mês"
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                />
+              </div>
+
+              {/* 19. Remuneração pretendida */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  {isEn ? "19. Desired Compensation" : "19. Remuneração Pretendida"} <span className="text-blue-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.targetSalary}
+                  onChange={(e) => setFormData({ ...formData, targetSalary: e.target.value })}
+                  placeholder="Ex: € 4.500 / mês ou $ 80.000 / ano"
+                  className="w-full h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* 23. Upload do CV */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                {isEn ? "23. CV / Resume Upload (PDF or DOCX)" : "23. Upload do Currículo (PDF ou DOCX)"} <span className="text-blue-600">*</span>
+              </label>
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl bg-slate-50 hover:bg-slate-100/80 transition-colors">
+                <div className="space-y-2 text-center">
+                  <UploadCloud className="mx-auto h-9 w-9 text-blue-600" />
+                  <div className="flex text-xs text-slate-600 justify-center">
+                    <label className="relative cursor-pointer rounded-md font-bold text-blue-600 hover:text-blue-700 focus-within:outline-none">
+                      <span>{isEn ? "Click to select file" : "Clique para selecionar o arquivo"}</span>
+                      <input
+                        type="file"
+                        accept=".pdf,.docx,.doc"
+                        className="sr-only"
+                        onChange={handleFileChange}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-[11px] text-slate-500">
+                    {formData.cvFileName
+                      ? `${isEn ? "Selected file: " : "Arquivo selecionado: "}${formData.cvFileName}`
+                      : `${isEn ? "Accepted formats: PDF or DOCX (Max 10MB)" : "Formatos aceitos: PDF ou DOCX (Tamanho máx: 10MB)"}`}
+                  </p>
+                  {formData.cvFileName && (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium">
+                      <CheckCircle className="w-3.5 h-3.5" />
+                      <span>{isEn ? "CV successfully attached" : "CV anexado com sucesso"}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* 24. Pergunta Comercial Obrigatória */}
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200">
+              <label className="block text-xs sm:text-sm font-bold text-slate-900 mb-2 leading-snug">
+                {isEn 
+                  ? "24. The International Job Hunting & Career Mentoring is an exclusive paid professional service. If your profile is eligible, which option best reflects your current readiness?"
+                  : "24. O International Job Hunting & Career Mentoring é um serviço profissional remunerado. Caso seu perfil seja elegível, qual opção melhor representa seu momento atual?"} <span className="text-blue-600">*</span>
+              </label>
+              
+              <div className="space-y-2.5 mt-3">
+                <label className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
+                  formData.commercialReadiness === 'ready_to_invest'
+                    ? 'bg-blue-50 border-blue-600 text-slate-900 shadow-xs'
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                }`}>
+                  <input
+                    type="radio"
+                    name="commercialReadiness"
+                    value="ready_to_invest"
+                    checked={formData.commercialReadiness === 'ready_to_invest'}
+                    onChange={() => setFormData({ ...formData, commercialReadiness: 'ready_to_invest' })}
+                    className="mt-1 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div>
+                    <strong className="text-xs sm:text-sm text-slate-900 block">
+                      {isEn ? "I am prepared to invest in the program." : "Estou preparado(a) para investir no programa."}
+                    </strong>
+                    <span className="text-[11px] text-slate-500">
+                      {isEn 
+                        ? "I prioritize 1-on-1 advisory and want to accelerate my international placement."
+                        : "Priorizo acompanhamento individual e quero acelerar minha contratação internacional."}
+                    </span>
+                  </div>
+                </label>
+
+                <label className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
+                  formData.commercialReadiness === 'want_conditions_first'
+                    ? 'bg-blue-50 border-blue-600 text-slate-900 shadow-xs'
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                }`}>
+                  <input
+                    type="radio"
+                    name="commercialReadiness"
+                    value="want_conditions_first"
+                    checked={formData.commercialReadiness === 'want_conditions_first'}
+                    onChange={() => setFormData({ ...formData, commercialReadiness: 'want_conditions_first' })}
+                    className="mt-1 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div>
+                    <strong className="text-xs sm:text-sm text-slate-900 block">
+                      {isEn ? "I want to know the investment and conditions before deciding." : "Quero conhecer o investimento e as condições antes de decidir."}
+                    </strong>
+                    <span className="text-[11px] text-slate-500">
+                      {isEn 
+                        ? "I would like to understand the commercial proposal and timeline during the initial assessment."
+                        : "Gostaria de entender a proposta comercial e o cronograma na avaliação prévia."}
+                    </span>
+                  </div>
+                </label>
+
+                <label className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
+                  formData.commercialReadiness === 'no_financial_availability'
+                    ? 'bg-blue-50 border-blue-600 text-slate-900 shadow-xs'
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                }`}>
+                  <input
+                    type="radio"
+                    name="commercialReadiness"
+                    value="no_financial_availability"
+                    checked={formData.commercialReadiness === 'no_financial_availability'}
+                    onChange={() => setFormData({ ...formData, commercialReadiness: 'no_financial_availability' })}
+                    className="mt-1 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div>
+                    <strong className="text-xs sm:text-sm text-slate-900 block">
+                      {isEn ? "I do not have financial availability at this time." : "Não tenho disponibilidade financeira neste momento."}
+                    </strong>
+                    <span className="text-[11px] text-slate-500">
+                      {isEn 
+                        ? "I prefer to follow public job openings and free content."
+                        : "Prefiro acompanhar apenas as vagas públicas e conteúdos gratuitos."}
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            {/* Consentimento LGPD / GDPR */}
+            <div className="pt-2">
+              <label className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer text-left">
+                <input
+                  type="checkbox"
+                  required
+                  checked={formData.privacyConsent}
+                  onChange={(e) => setFormData({ ...formData, privacyConsent: e.target.checked })}
+                  className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 shrink-0"
+                />
+                <span className="text-xs text-slate-600 leading-relaxed">
+                  {isEn 
+                    ? "I authorize the processing of my personal details and CV exclusively for evaluation of my profile and contact regarding RL Headhunter services under our Privacy Policy."
+                    : "Autorizo o tratamento dos dados fornecidos neste formulário e no meu CV para análise do meu perfil profissional, contato comercial relacionado aos serviços da RL Headhunter e avaliação de aderência ao programa solicitado, nos termos da Política de Privacidade aplicável."}
+                </span>
+              </label>
+            </div>
+          </div>
+        )}
+
+        {/* Navigation Controls */}
+        <div className="pt-6 border-t border-slate-200 flex items-center justify-between gap-4">
+          {currentStep > 1 ? (
+            <button
+              type="button"
+              onClick={prevStep}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 text-xs font-bold transition-all cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>{isEn ? "Back" : "Voltar"}</span>
+            </button>
+          ) : (
+            <div />
+          )}
+
+          {currentStep < 4 ? (
+            <button
+              type="button"
+              onClick={nextStep}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
+            >
+              <span>{isEn ? "Next Step" : "Próxima Etapa"}</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 disabled:bg-slate-300 text-white text-xs font-extrabold transition-all shadow-md shadow-emerald-600/20 cursor-pointer"
+            >
+              {isSubmitting ? (
+                <span>{isEn ? "Processing Screening..." : "Processando Triagem..."}</span>
+              ) : (
+                <>
+                  <span>{isEn ? "SUBMIT FOR PRE-QUALIFICATION" : "ENVIAR PARA PRÉ-QUALIFICAÇÃO"}</span>
+                  <CheckCircle className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          )}
+        </div>
+
+      </form>
     </div>
   );
 
@@ -898,7 +968,7 @@ export const QualificationForm: React.FC<QualificationFormProps> = ({ onSuccess,
   }
 
   return (
-    <section id="pre-qualificacao" className="py-16 lg:py-24 bg-slate-950 text-white scroll-mt-20">
+    <section id="pre-qualificacao" className="py-16 lg:py-24 bg-slate-50 text-slate-900 scroll-mt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {content}
       </div>
