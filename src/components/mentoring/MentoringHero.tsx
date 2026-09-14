@@ -14,34 +14,34 @@ export const MentoringHero: React.FC<MentoringHeroProps> = ({
   const { t } = useLanguage();
 
   return (
-    <section className="relative pt-24 pb-16 lg:pt-32 lg:pb-24 bg-slate-950 text-white border-b border-slate-800">
+    <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-20 bg-white text-slate-900 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
           
           {/* Left Column: Core Value Proposition */}
           <div className="lg:col-span-7 space-y-6 text-left">
             {/* Service Label */}
-            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-blue-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-blue-700">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-700" />
               <span>{t.mentoring.hero.serviceBadge}</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight">
               {t.mentoring.hero.headline}
             </h1>
 
             {/* Subheadline */}
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
               {t.mentoring.hero.subheadline}
             </p>
 
             {/* Markets in highlight */}
             <div className="pt-1">
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                 {t.mentoring.hero.marketsLabel}
               </div>
-              <p className="text-sm font-medium text-slate-200">
+              <p className="text-sm font-semibold text-slate-800">
                 {t.mentoring.hero.marketsList}
               </p>
             </div>
@@ -50,23 +50,25 @@ export const MentoringHero: React.FC<MentoringHeroProps> = ({
             <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               {/* Primary CTA: Opens Qualification Modal */}
               <button
+                type="button"
                 onClick={onStartQualification}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition-all cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+                className="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-lg text-sm font-bold text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-800 transition-all cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 <span>{t.mentoring.hero.primaryCta}</span>
               </button>
 
               {/* Secondary CTA: Scrolls to Job Board */}
               <button
+                type="button"
                 onClick={onViewJobs}
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-sm font-semibold text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-850 border border-slate-700 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400"
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg text-sm font-semibold text-slate-700 hover:text-slate-950 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <span>{t.mentoring.hero.secondaryCta}</span>
                 <ArrowDown className="w-3.5 h-3.5 text-slate-400" />
               </button>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-slate-400 pt-1">
+            <div className="flex items-center gap-2 text-xs text-slate-500 pt-1">
               <Shield className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <span>{t.mentoring.hero.footnote}</span>
             </div>
@@ -74,7 +76,7 @@ export const MentoringHero: React.FC<MentoringHeroProps> = ({
 
           {/* Right Column: Executive Portrait */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-sm rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900">
+            <div className="w-full max-w-sm rounded-xl overflow-hidden border border-slate-300 shadow-md bg-slate-100">
               <img
                 src="/img.jpeg"
                 alt="Ricardo Oliveira"
